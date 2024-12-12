@@ -1,4 +1,4 @@
-Zip Code,City,State
+zip_code,city,state
 2138,Cambridge,Massachusetts
 2139,Cambridge,Massachusetts
 94305,Stanford,California
@@ -100,4 +100,4 @@ Zip Code,City,State
 66506,Manhattan,Kansas
 12180,Troy,Newyork
 35487,Tuscaloosa,Alabama
-29634,Clemson,South Carolina
+29634,'Clemson,South Carolina
