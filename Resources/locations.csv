@@ -1,13 +1,103 @@
-zip_code, city, state
-02138,'Cambridge','Massachusetts'
-02139,'Cambridge','Massachusetts'
-94305,'Stanford','California'
-14850,'Ithaca','New York'
-94720,'Berkeley','California'
-48109,'Ann Arbor','Michigan'
-10027,'New York','New York'
-98195,'Seattle','Washington'
-90095,'California','Los Angeles'
-53706,'Madison','Wisconsin'
-19104,'Philadelphia','Pennsylvania'
-06520,'New Haven','Connecticut'
+Zip Code,City,State
+2138,Cambridge,Massachusetts
+2139,Cambridge,Massachusetts
+94305,Stanford,California
+14850,Ithaca,New York
+94720,Berkeley,California
+48109,Ann Arbor,Michigan
+10027,New York,New York
+98195,Seattle,Washington
+90095,California,Los Angeles
+53706,Madison,Wisconsin
+19104,Philadelphia,Pennsylvania
+6520,New Haven,Connecticut
+78712,Austin,Texas
+32611,Gainesville,Florida
+92093,San Diego,California
+27708, Durham,North Carolina
+48824,East Lansing,Michigan
+60637,Chicago,Illinois
+27599,"Chapel Hill,",North Carolina
+21218,Baltimore,Maryland
+61820,"Champaign,",Illinois
+95616,Davis,California
+8544,Princeton,New Jersey
+47907,Indiana,Lafayette
+10012,New York,New York
+90089,California,Los Angeles
+20742,Maryland,College Park
+77843,Texas,College Station
+85721,Arizona,Tucson
+22904,Virginia,Charlottesville
+15213,Pennsylvania,Pittsburgh
+91125,California,Pasadena
+43210,Ohio,Columbus
+8901,New Jersey,Brunswick
+60208,Illinois,Evanston
+15260,Pennsylvania,Pittsburgh
+37235,Tennessee,Nashville
+63130,Missouri,St. Louis
+92697,California,California
+85281,Arizona,"Tempe,"
+30332,Georgia,Atlanta
+80309,Colorado,Boulder
+2155,Massachusetts,Medford
+2215,Massachusetts,Boston
+84112,Utah,Salt Lake City
+27695,Raleigh,North Carolina
+24061,Virginia,Blacksburg
+93106,Santa Barbara,California
+52242,Iowa City,Iowa
+50013,Ames,Iowa
+30602,Athens,Georgia
+95064,Santa Cruz,California
+40506,Lexington,Kentucky
+80523,Fort Collins,Colorado
+14260,Buffalo,New York
+2912,Providence,Rhode Island
+97331,Corvallis,Oregon
+14627,Rochester,New York
+92521,Riverside,California
+30322,Atlanta,Georgia
+68588,Lincoln,Nebraska
+32313,Tallahassee,Florida
+1003,Amherst,Massachusetts
+65211,Columbia,Missouri
+16802,"State College,",Pennsylvania
+66045,Lawrence,Kansas
+33620,Tampa,Florida
+37849,Knoxville,Tennessee
+60607,Chicago,Illinois
+77005,Houston,Texas
+99164,"Pullman,",Washington
+73019,"Norman,",Oklahoma
+97403,Eugene,Oregon
+87104,Albuquerque,New Mexico
+3755,Hanover,New Hampshire
+46556,Notre Dame,Indiana
+29208,Columbia,South Carolina
+22030,Fairfax, Virginia
+33124,Coral Gables,Florida
+20057,Washington,D.C
+6269,Storrs,Connecticut
+77204,Houston,Texas
+20052,Foggy Bottom,"Washington, D.C"
+45220,Cincinnati,Ohio
+84602,Provo,Utah
+19121,Philadelphia,Pennsylvania
+70803, Baton Rouge, Louisiana
+44106,Cleveland,Ohio
+46202,Indianapolis,Indiana
+76203,Denton,Texas
+13244,Syracuse,New York
+48202,Michigan,Wayne State
+35294,Birmingham,Alabama
+84322, Logan,Utah
+23284,Richmond,Virginia
+5405, Burlington,Vermont
+32816,Orlando,Florida
+19104,Philadelphia,Pennsylvania
+66506,Manhattan,Kansas
+12180,Troy,Newyork
+35487,Tuscaloosa,Alabama
+29634,Clemson,South Carolina

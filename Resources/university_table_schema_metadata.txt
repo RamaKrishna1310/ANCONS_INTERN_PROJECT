@@ -1,0 +1,15 @@
+universities
+u_id, university_name, zip_code, type_of_school, total_enrolments, acceptance, dept_id, tuition_fee, Fall_deadline, spring_deadline,
+application_fee, Req_GPA, Req_TOEFL, Req_IELTS, Req_PTE, Req_GRE_V, Req_GRE_Q, email, phone_number
+---------------------------------------------
+courses
+course_id,course_name,
+--------------------------------------------------
+locations
+zip_code, city, state
+-----------------------------------------------
+departments
+dept_id, dept_name
+-------------------------------------------
+university_courses
+u_id, c_id

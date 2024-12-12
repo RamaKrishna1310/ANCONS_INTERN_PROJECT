@@ -2,6 +2,11 @@ create database university_recommendation;
 show databases;
 use university_recommendation;
 show tables;
+desc university;
+desc location;
+desc department;
+desc course;
+desc university_courses;
 
 create table universities(u_id int primary key, name varchar(100) not null unique, zip_code int, type_of_school varchar(50), total_enrolments int, acceptance_in_pct double, dept_id int, tuition_fee_in_dollars int, Fall_deadline date, spring_deadline date, app_fee_in_dollar int, req_GPA double, req_TOEFL int, req_IELTS double, req_PTE int, req_GRE_V int, req_GRE_Q int, email varchar(30), phone varchar(15));
 create table courses(c_id int primary key, course_name varchar(100));
@@ -28,7 +33,11 @@ select * from locations;
 select * from departments;
 select * from university_courses;
 select * from university_courses join universities on university_courses.u_id=universities.u_id join courses on university_courses.c_id=courses.c_id;
+select * from university_courses join universities on university_courses.u_id=universities.u_id join courses on university_courses.c_id=courses.c_id where universities.acceptance_in_pct > 50;
+
 
 delete from university_courses;
+
+drop database university_recommendation;
 
 commit
