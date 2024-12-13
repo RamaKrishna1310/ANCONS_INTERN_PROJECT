@@ -1,5 +1,7 @@
 package com.ancons.universityRecommendations.service;
 
-public interface StudentService {
+import com.ancons.universityRecommendations.model.Student;
 
+public interface StudentService {
+	public void saveDetailsAndGeneratePin(Student student);
 }
