@@ -5,7 +5,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationServiceImpl implements NotificationService {
+public class NotificationServiceImpl {
 
 	private final JavaMailSender javaMailSender;
 	
@@ -13,7 +13,6 @@ public class NotificationServiceImpl implements NotificationService {
 		this.javaMailSender = javaMailSender;
 	}
 	
-	@Override
 	public void sendNotification(String to, String subject, String body) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(to);

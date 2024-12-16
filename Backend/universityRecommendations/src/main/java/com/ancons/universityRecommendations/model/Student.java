@@ -1,7 +1,6 @@
 package com.ancons.universityRecommendations.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,4 +29,5 @@ public class Student {
 	private LocalDate dateOfBirth;
 	private Integer pin;
 	private String password;
+	private String role;
 }
