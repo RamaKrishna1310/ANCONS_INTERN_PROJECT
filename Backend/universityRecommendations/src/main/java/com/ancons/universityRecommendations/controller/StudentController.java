@@ -66,8 +66,7 @@ public class StudentController {
 		if (authResponse == null) {
 			throw new Exception("error while creating password");
 		} else {
-			System.out.println(authResponse.toString());
-			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
+ 			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 		}
 	}
 	@PostMapping("/login")

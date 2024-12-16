@@ -10,38 +10,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Student {
-
+@AllArgsConstructor
+public class PersonalInformation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+	private String prefix;
 	private String firstName;
+	private String middleName;
 	private String lastName;
-	@NotNull
-	private String email;
-	@NotNull
-	private LocalDate dateOfBirth;
-	private Integer pin;
-	private String password;
-	private String role;
+	private String suffix;
+	private String otherFirstName;
+	private String otherLastName;
 	
 	@JsonIgnore
 	@OneToMany
-	private List<StudentApplication> applications = new ArrayList<>();
+	private List<Address> addresses = new ArrayList<>();
+	private String email;
+	private String dayTimeNo;
+	private String homePhone;
+	private String cellPhone;
+	private String gender;
+	private LocalDate dateOfBirth;
+	private String primaryCitizenship;
+	private String dualCitizenship;
+	private String socialSecurityNumber;
+	private boolean hispanicOrLatino;
+	private List<String> memberGroups = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToOne
-	private PersonalInformation personalInformation;
+	@JoinColumn(name="student_id")
+	private Student student;
 }
