@@ -44,4 +44,16 @@ public class Student {
 	@JsonIgnore
 	@OneToOne
 	private PersonalInformation personalInformation;
+	
+	@JsonIgnore
+	@OneToMany
+	private List<Address> addresses = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToOne
+	private EnrollmentPlan enrollmentPlan;
+	
+	@JsonIgnore
+	@OneToMany
+	private List<AcademicHistory> academicHistories = new ArrayList<>();
 }

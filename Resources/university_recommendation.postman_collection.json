@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "1f36b5ba-be40-422f-8eb0-ee4177458298",
+		"name": "university_recommendation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32961815"
+	},
+	"item": [
+		{
+			"name": "registerAndGeneratePin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"firstName\",\r\n    \"lastName\": \"lastName\",\r\n    \"email\": \"myemail1@mail.com\",\r\n    \"dateOfBirth\": \"2001-01-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/auth/registerAndGeneratePin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"auth",
+						"registerAndGeneratePin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-pin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pin\": 702304,\r\n    \"dateOfBirth\": \"2001-01-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/auth/myemail1@mail.com/verify-pin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"auth",
+						"myemail1@mail.com",
+						"verify-pin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/auth/myemail1@mail.com/create-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"auth",
+						"myemail1@mail.com",
+						"create-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"myemail1@mail.com\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createApplication",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"Spring2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/api/myemail1@mail.com/createApplication",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"api",
+						"myemail1@mail.com",
+						"createApplication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "personalInformation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"addresses\": [\r\n        {\r\n            \"type\": \"permanent\",\r\n            \"country\": \"India\",\r\n            \"streetAddress\": \"myStreet\",\r\n            \"city\": \"Hyderabad\",\r\n            \"state\": \"Telangana\",\r\n            \"postalCode\": 500006\r\n        }\r\n    ],\r\n    \"personalInformation\": {\r\n        \"prefix\": \"mr\",\r\n        \"middleName\": \"middleName\",\r\n        \"suffix\": \"sir\",\r\n        \"cellPhone\": \"+919898989898\",\r\n        \"gender\": \"male\"\r\n    }\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/api/myemail1@mail.com/personal-information",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"api",
+						"myemail1@mail.com",
+						"personal-information"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "enrollment-plan",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"selectedGraduationType\": \"UnderGraduate\",\r\n    \"studentType\": \"Freshman\",\r\n    \"applicationType\": \"Early-1\",\r\n    \"intendedMajor\": \"Computer Science\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/api/myemail1@mail.com/enrollment-plan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"api",
+						"myemail1@mail.com",
+						"enrollment-plan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "academic-history",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"institute\",\r\n    \"institutionName\": \"University of BridgePort\",\r\n    \"country\": \"United States\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"New York\",\r\n    \"startYear\": \"2022\",\r\n    \"startMonth\": \"April\",\r\n    \"endYear\": \"2024\",\r\n    \"endMonth\": \"June\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5054/api/myemail1@mail.com/academic-history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5054",
+					"path": [
+						"api",
+						"myemail1@mail.com",
+						"academic-history"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ0Mjk3MjcsImV4cCI6MTczNDUxNjEyNywiZW1haWwiOiJteWVtYWlsMUBtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiU1RVREVOVCJ9.Nilt5O8FZ0SnX3YY-AOx3NhW7NkqulCNYT5QgNVetgw",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

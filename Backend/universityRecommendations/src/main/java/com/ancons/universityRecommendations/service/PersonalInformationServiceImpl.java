@@ -3,8 +3,8 @@ package com.ancons.universityRecommendations.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ancons.universityRecommendations.dto.StudentDto;
 import com.ancons.universityRecommendations.model.Address;
-import com.ancons.universityRecommendations.model.PersonalInformation;
 import com.ancons.universityRecommendations.model.Student;
 import com.ancons.universityRecommendations.repository.AddressRepository;
 import com.ancons.universityRecommendations.repository.PersonalInformationRepository;
@@ -21,13 +21,14 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 	private PersonalInformationRepository personalInformationRepository;
 	
 	@Override
-	public void savePersonalInformation(PersonalInformation personalInformation, String email) {
+	public void savePersonalInformation(StudentDto studentDto, String email) {
 		Student existingStudent = studentRepository.findByEmail(email);
-		for (Address address : personalInformation.getAddresses()) {
+		for (Address address : studentDto.getAddresses()) {
 			addressRepository.save(address);
 		}
-		personalInformationRepository.save(personalInformation);
-		existingStudent.setPersonalInformation(personalInformation);
+		personalInformationRepository.save(studentDto.getPersonalInformation());
+		existingStudent.setPersonalInformation(studentDto.getPersonalInformation());
+		existingStudent.getAddresses().addAll(studentDto.getAddresses());
 		studentRepository.save(existingStudent);
 	}
 
