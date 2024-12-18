@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    color: #333333
+}
+h1{
+   color: rgb(93, 77, 201);
+   font-weight: 500;
+}
+.verify-p{
+    border-left: 4px solid green;
+    background-color: lightgreen;
+    padding: 5px;
+}
+table{
+    width: 100%;
+}
