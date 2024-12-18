@@ -48,7 +48,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"pin\": 702304,\r\n    \"dateOfBirth\": \"2001-01-01\"\r\n}",
+					"raw": "{\r\n    \"pin\": 953665,\r\n    \"dateOfBirth\": \"2001-01-01\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -151,7 +151,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5054/api/myemail1@mail.com/createApplication",
+					"raw": "http://localhost:5054/api/1/createApplication",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -159,7 +159,7 @@
 					"port": "5054",
 					"path": [
 						"api",
-						"myemail1@mail.com",
+						"1",
 						"createApplication"
 					]
 				}
@@ -181,7 +181,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5054/api/myemail1@mail.com/personal-information",
+					"raw": "http://localhost:5054/api/1/personal-information",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -189,7 +189,7 @@
 					"port": "5054",
 					"path": [
 						"api",
-						"myemail1@mail.com",
+						"1",
 						"personal-information"
 					]
 				}
@@ -211,7 +211,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5054/api/myemail1@mail.com/enrollment-plan",
+					"raw": "http://localhost:5054/api/1/enrollment-plan",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -219,7 +219,7 @@
 					"port": "5054",
 					"path": [
 						"api",
-						"myemail1@mail.com",
+						"1",
 						"enrollment-plan"
 					]
 				}
@@ -262,7 +262,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ0Mjk3MjcsImV4cCI6MTczNDUxNjEyNywiZW1haWwiOiJteWVtYWlsMUBtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiU1RVREVOVCJ9.Nilt5O8FZ0SnX3YY-AOx3NhW7NkqulCNYT5QgNVetgw",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzQ1MTg2MjAsImV4cCI6MTczNDYwNTAyMCwiZW1haWwiOiJteWVtYWlsMUBtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiU1RVREVOVCJ9.LQpXIzTDJHTeISDvpWz0i0pPEMXb6L7oXMmgaBV-8ug",
 				"type": "string"
 			}
 		]

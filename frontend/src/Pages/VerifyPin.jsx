@@ -3,7 +3,7 @@ export default function VerifyPin(){
         <>
             <div>
                 <h1>Login</h1>
-                <p class="verify-p"
+                <p className="verify-p"
                 >A temporary PIN has been sent to your email address. if you do not recieve
                      this message in the next few minutes. please check your junk mail folder.</p>
                 <form>

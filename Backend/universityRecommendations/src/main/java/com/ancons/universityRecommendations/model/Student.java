@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,34 +26,31 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
 	private String firstName;
 	private String lastName;
-	@NotNull
 	private String email;
-	@NotNull
 	private LocalDate dateOfBirth;
 	private Integer pin;
 	private String password;
 	private String role;
 	
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<StudentApplication> applications = new ArrayList<>();
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
 	private PersonalInformation personalInformation;
 	
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Address> addresses = new ArrayList<>();
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
 	private EnrollmentPlan enrollmentPlan;
 	
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<AcademicHistory> academicHistories = new ArrayList<>();
 }

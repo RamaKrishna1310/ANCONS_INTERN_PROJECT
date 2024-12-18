@@ -1,8 +1,12 @@
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getStudentApplication, getStudentApplications } from "../redux/Student/Action";
 
 export default function ApplicationStatus() {
+  const dispatch = useDispatch();
+  const {student} = useSelector((store) => store);
   const [openDialog, setOpenDialog] = useState(false);
   function handleClose() {
     setOpenDialog(false);
@@ -11,12 +15,18 @@ export default function ApplicationStatus() {
     setOpenDialog(true);
   }
 
+  console.log("application", student?.studentApplication);
+  useEffect(() => {
+    dispatch(getStudentApplication(student?.student.id));
+    dispatch(getStudentApplications(student?.student.id));
+  }, [])
+
   return (
     <>
       <div class="application-status-main">
         <h1>Welcome to our application!</h1>
         <p>
-          Thank you for your interest in the University of Bridgeport! We re
+          Thank you for your interest in the California Institute of Genetics! We re
           excited to recieve your application. If you are filling out the
           application, please contact us at.
         </p>

@@ -17,11 +17,11 @@ public class AcademicHistorySerivceImpl implements AcademicHistoryService {
 	private AcademicHistoryRepository academicHistoryRepository;
 	
 	@Override
-	public void saveAcademicHistory(AcademicHistory academicHistory, String email) {
-		Student existingStudent = studentRepository.findByEmail(email);
+	public void saveAcademicHistory(AcademicHistory academicHistory, Long id) {
+		Student existingStudent = studentRepository.findById(id).get();
+		academicHistory.setStudent(existingStudent);
 		academicHistoryRepository.save(academicHistory);
 		existingStudent.getAcademicHistories().add(academicHistory);
-		studentRepository.save(existingStudent);
 	}
 
 }

@@ -18,9 +18,9 @@ public class AcademicHistoryController {
 	@Autowired
 	private AcademicHistoryService academicHistoryService;
 	
-	@PutMapping("/{email}/academic-history")
-	public ResponseEntity<Void> saveAcademicHistory(@RequestBody AcademicHistory academicHistory, @PathVariable String email) {
-		academicHistoryService.saveAcademicHistory(academicHistory, email);
+	@PutMapping("/{id}/academic-history")
+	public ResponseEntity<Void> saveAcademicHistory(@RequestBody AcademicHistory academicHistory, @PathVariable Long id) {
+		academicHistoryService.saveAcademicHistory(academicHistory, id);
 		return ResponseEntity.noContent().build();
 	}
 }

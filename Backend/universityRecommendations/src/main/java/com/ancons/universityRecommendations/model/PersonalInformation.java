@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,4 +36,8 @@ public class PersonalInformation {
 	private String socialSecurityNumber;
 	private boolean hispanicOrLatino;
 	private List<String> memberGroups = new ArrayList<>();
+	
+	@OneToOne
+	@JoinColumn(name = "student_id")
+	private Student student;
 }

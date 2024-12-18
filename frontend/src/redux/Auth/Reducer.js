@@ -1,7 +1,6 @@
-import { CREATE_PASSWORD_FAILURE, CREATE_PASSWORD_REQUEST, CREATE_PASSWORD_SUCCESS, GET_STUDENT_FAILURE, GET_STUDENT_REQUEST, GET_STUDENT_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, VERIFY_PIN_FAILURE, VERIFY_PIN_REQUEST, VERIFY_PIN_SUCCESS } from "./ActionTypes"
+import { CREATE_PASSWORD_FAILURE, CREATE_PASSWORD_REQUEST, CREATE_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, VERIFY_PIN_FAILURE, VERIFY_PIN_REQUEST, VERIFY_PIN_SUCCESS } from "./ActionTypes"
 
 const initialState = {
-    student: null,
     loading: false,
     error: null,
     jwt: null,
@@ -13,7 +12,6 @@ const authReducer = (state = initialState, action) => {
         case LOGIN_REQUEST:
         case VERIFY_PIN_REQUEST:
         case CREATE_PASSWORD_REQUEST:
-        case GET_STUDENT_REQUEST:
             return { ...state, loading: true, error: null };
 
         case REGISTER_SUCCESS:
@@ -24,14 +22,6 @@ const authReducer = (state = initialState, action) => {
         case LOGIN_SUCCESS:
             return { ...state, loading: false, jwt: action.payload.jwt };
         
-        case GET_STUDENT_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                student: action.payload,
-            }
-
-        case GET_STUDENT_FAILURE:
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:
         case VERIFY_PIN_FAILURE:

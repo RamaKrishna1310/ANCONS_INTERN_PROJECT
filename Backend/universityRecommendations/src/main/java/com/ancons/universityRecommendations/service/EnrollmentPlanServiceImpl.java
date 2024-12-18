@@ -17,11 +17,11 @@ public class EnrollmentPlanServiceImpl implements EnrollmentPlanService {
 	private EnrollmentPlanRepository enrollmentPlanRepository;
 	
 	@Override
-	public void saveEnrollmentPlan(EnrollmentPlan enrollmentPlan, String Email) {
-		Student existingStudent = studentRepository.findByEmail(Email);
+	public void saveEnrollmentPlan(EnrollmentPlan enrollmentPlan, Long id) {
+		Student existingStudent = studentRepository.findById(id).get();
+		enrollmentPlan.setStudent(existingStudent);
 		enrollmentPlanRepository.save(enrollmentPlan);
 		existingStudent.setEnrollmentPlan(enrollmentPlan);
-		studentRepository.save(existingStudent);
 	}
 
 }

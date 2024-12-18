@@ -18,9 +18,9 @@ public class PersonalInformationController {
 	@Autowired
 	private PersonalInformationService personalInformationService;
 	
-	@PostMapping("/{email}/personal-information")
-	public ResponseEntity<Void> savePersonalInformation(@RequestBody StudentDto studentDto, @PathVariable String email) {
-		personalInformationService.savePersonalInformation(studentDto, email);
+	@PostMapping("/{id}/personal-information")
+	public ResponseEntity<Void> savePersonalInformation(@RequestBody StudentDto studentDto, @PathVariable Long id) {
+		personalInformationService.savePersonalInformation(studentDto, id);
 		return ResponseEntity.ok().build();
 	}
 	

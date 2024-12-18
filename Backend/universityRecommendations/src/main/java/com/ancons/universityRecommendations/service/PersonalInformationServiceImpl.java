@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ancons.universityRecommendations.dto.StudentDto;
 import com.ancons.universityRecommendations.model.Address;
+import com.ancons.universityRecommendations.model.PersonalInformation;
 import com.ancons.universityRecommendations.model.Student;
 import com.ancons.universityRecommendations.repository.AddressRepository;
 import com.ancons.universityRecommendations.repository.PersonalInformationRepository;
@@ -21,15 +22,17 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 	private PersonalInformationRepository personalInformationRepository;
 	
 	@Override
-	public void savePersonalInformation(StudentDto studentDto, String email) {
-		Student existingStudent = studentRepository.findByEmail(email);
+	public void savePersonalInformation(StudentDto studentDto, Long id) {
+		Student existingStudent = studentRepository.findById(id).get();
 		for (Address address : studentDto.getAddresses()) {
+			address.setStudent(existingStudent);
 			addressRepository.save(address);
 		}
-		personalInformationRepository.save(studentDto.getPersonalInformation());
+		PersonalInformation personalInformation = studentDto.getPersonalInformation();
+		personalInformation.setStudent(existingStudent);
+		personalInformationRepository.save(personalInformation);
 		existingStudent.setPersonalInformation(studentDto.getPersonalInformation());
 		existingStudent.getAddresses().addAll(studentDto.getAddresses());
-		studentRepository.save(existingStudent);
 	}
 
 }

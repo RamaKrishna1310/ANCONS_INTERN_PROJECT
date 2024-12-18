@@ -18,9 +18,9 @@ public class EnrollmentPlanController {
 	@Autowired
 	private EnrollmentPlanService enrollmentPlanService;
 	
-	@PutMapping("/{email}/enrollment-plan")
-	public ResponseEntity<Void> saveEnrollmentPlan(@RequestBody EnrollmentPlan enrollmentPlan, @PathVariable String email){
-		enrollmentPlanService.saveEnrollmentPlan(enrollmentPlan, email);
+	@PutMapping("/{id}/enrollment-plan")
+	public ResponseEntity<Void> saveEnrollmentPlan(@RequestBody EnrollmentPlan enrollmentPlan, @PathVariable Long id){
+		enrollmentPlanService.saveEnrollmentPlan(enrollmentPlan, id);
 		return ResponseEntity.noContent().build();
 	}
 }
