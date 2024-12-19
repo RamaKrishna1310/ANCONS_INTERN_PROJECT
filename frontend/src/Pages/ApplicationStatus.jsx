@@ -2,23 +2,58 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getStudentApplication, getStudentApplications } from "../redux/Student/Action";
+import { createApplication, getStudentApplication, getStudentApplications } from "../redux/Student/Action";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+const formSchema = z.object({
+  type: z.string()
+})
 
 export default function ApplicationStatus() {
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {student} = useSelector((store) => store);
-  const [openDialog, setOpenDialog] = useState(false);
-  function handleClose() {
-    setOpenDialog(false);
+  const { student } = useSelector((store) => store);
+  const [openFirstDialog, setOpenFirstDialog] = useState(false);
+  const [openSecondDialog, setOpenSecondDialog] = useState(false);
+  function handleFirstClose() {
+    setOpenFirstDialog(false);
   }
-  function handleOpen() {
-    setOpenDialog(true);
+  function handleFirstOpen() {
+    setOpenFirstDialog(true);
+  }
+  function handleSecondClose() {
+    setOpenSecondDialog(false);
+  }
+  function handleSecondOpen() {
+    setOpenSecondDialog(true);
   }
 
-  console.log("application", student?.studentApplication);
+  const {form, handleSubmit, register} = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      type: ""
+    }
+  })
+
+  const handleCreateApplication = (data) => {
+    console.log(data);
+    dispatch(createApplication(student?.student?.id, data));
+    handleSecondOpen();
+  }
+
+  const handleOpenApplication = () => {
+    navigate("/personal-information")
+  }
+
   useEffect(() => {
-    dispatch(getStudentApplication(student?.student.id));
-    dispatch(getStudentApplications(student?.student.id));
+    if (student?.student?.id) {
+      dispatch(getStudentApplication(student?.student?.id));
+      dispatch(getStudentApplications(student?.student?.id));
+    }
   }, [])
 
   return (
@@ -48,8 +83,8 @@ export default function ApplicationStatus() {
           </tr>
         </table>
         <hr />
-        <button onClick={handleOpen}>Start New Application</button>
-        <Dialog onClose={handleClose} open={openDialog}>
+        <button onClick={handleFirstOpen}>Start New Application</button>
+        <Dialog onClose={handleFirstClose} open={openFirstDialog}>
           <DialogTitle> Start new Application </DialogTitle>
           <h3>Please select the year and term you plan to start</h3>
           <p>
@@ -58,29 +93,31 @@ export default function ApplicationStatus() {
           </p>
           <h3>Select an application type: </h3>
           <span>2025</span>
-          <select>
-            <option>select</option>
-            <option>Fall 2025</option>
-            <option>Summer 2025</option>
-            <option></option>
-          </select>
-          <input type="submit" value="Create Application"/>
-          <button>Cancel</button>
+          <form onSubmit={handleSubmit(handleCreateApplication)}>
+            <select name="type" {...register("type")}>
+              <option>select</option>
+              <option value="Fall2025">Fall 2025</option>
+              <option value="Summer2025">Summer 2025</option>
+              <option value="Spring2025">Spring 2025</option>
+            </select>
+            <input type="submit" value="Create Application" />
+          </form>
+          <button onClick={handleFirstClose}>Cancel</button>
         </Dialog>
-        <Dialog>
-            <DialogTitle>Application Details</DialogTitle>
-            <table>
-                <tr>
-                    <td>Started</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td></td>
-                </tr>
-            </table>
-            <input type="submit" value="Open Application" />
-            <button>Cancel</button>
+        <Dialog onClose={handleSecondClose} open={openSecondDialog}>
+          <DialogTitle>Application Details</DialogTitle>
+          <table>
+            <tr>
+              <td>Started</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td></td>
+            </tr>
+          </table>
+          <input type="submit" value="Open Application" onClick={handleOpenApplication} />
+          <button onClick={handleSecondClose}>Cancel</button>
         </Dialog>
       </div>
     </>

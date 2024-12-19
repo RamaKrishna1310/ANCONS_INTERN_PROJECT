@@ -24,4 +24,9 @@ public class EnrollmentPlanServiceImpl implements EnrollmentPlanService {
 		existingStudent.setEnrollmentPlan(enrollmentPlan);
 	}
 
+	@Override
+	public EnrollmentPlan getEnrollmentPlan(Long id) {
+		return enrollmentPlanRepository.findByStudentId(id);
+	}
+
 }

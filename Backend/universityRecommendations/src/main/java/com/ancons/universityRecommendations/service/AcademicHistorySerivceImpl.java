@@ -24,4 +24,9 @@ public class AcademicHistorySerivceImpl implements AcademicHistoryService {
 		existingStudent.getAcademicHistories().add(academicHistory);
 	}
 
+	@Override
+	public AcademicHistory getAcademicHistory(Long id) {
+		return academicHistoryRepository.findByStudentId(id);
+	}
+
 }

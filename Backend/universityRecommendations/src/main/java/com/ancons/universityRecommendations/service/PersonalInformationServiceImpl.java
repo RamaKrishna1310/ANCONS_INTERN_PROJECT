@@ -31,8 +31,14 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 		PersonalInformation personalInformation = studentDto.getPersonalInformation();
 		personalInformation.setStudent(existingStudent);
 		personalInformationRepository.save(personalInformation);
-		existingStudent.setPersonalInformation(studentDto.getPersonalInformation());
-		existingStudent.getAddresses().addAll(studentDto.getAddresses());
+		if (studentDto.getFirstName() != "" ) {
+			
+		}
+	}
+
+	@Override
+	public PersonalInformation getPersonalInformation(Long id) {
+		return personalInformationRepository.findByStudentId(id);
 	}
 
 }

@@ -4,4 +4,5 @@ import com.ancons.universityRecommendations.model.AcademicHistory;
 
 public interface AcademicHistoryService {
 	public void saveAcademicHistory(AcademicHistory academicHistory, Long id);
+	public AcademicHistory getAcademicHistory(Long id);
 }

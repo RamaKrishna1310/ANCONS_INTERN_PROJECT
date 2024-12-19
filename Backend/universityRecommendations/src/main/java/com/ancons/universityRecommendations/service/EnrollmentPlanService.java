@@ -4,4 +4,5 @@ import com.ancons.universityRecommendations.model.EnrollmentPlan;
 
 public interface EnrollmentPlanService {
 	public void saveEnrollmentPlan(EnrollmentPlan enrollmentPlan, Long id);
+	public EnrollmentPlan getEnrollmentPlan(Long id);
 }
