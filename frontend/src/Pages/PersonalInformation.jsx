@@ -8,7 +8,8 @@ import {
     getAddresses,
     getPersonalInformation,
 } from "../redux/Student/Action";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Country, City, State } from 'country-state-city'
 
 const formSchema = z.object({
     firstName: z.string(),
@@ -44,6 +45,15 @@ export default function PersonalInformation() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { student } = useSelector((store) => store);
+
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+
     const { form, reset, handleSubmit, register } = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -165,6 +175,72 @@ export default function PersonalInformation() {
         }
     }, [student?.personalInformation, student?.addresses, student?.student, reset])
 
+    useEffect(() => {
+        const getCountries = async () => {
+            try {
+                const result = await Country.getAllCountries();
+                let allCountries = [];
+                allCountries = result?.map(({ isoCode, name }) => ({
+                    isoCode,
+                    name
+                }));
+                const [{ isoCode: firstCountry } = {}] = allCountries;
+                setCountries(allCountries);
+                setSelectedCountry(firstCountry);
+            } catch (error) {
+                setCountries([]);
+            }
+        };
+
+        getCountries();
+    }, []);
+
+    useEffect(() => {
+        const getStates = async () => {
+            try {
+                const result = await State.getStatesOfCountry(selectedCountry);
+                let allStates = [];
+                allStates = result?.map(({ isoCode, name }) => ({
+                    isoCode,
+                    name
+                }));
+                const [{ isoCode: firstState = '' } = {}] = allStates;
+                setCities([]);
+                setSelectedCity('');
+                setStates(allStates);
+                setSelectedState(firstState);
+            } catch (error) {
+                setStates([]);
+                setCities([]);
+                setSelectedCity('');
+            }
+        };
+
+        getStates();
+    }, [selectedCountry]);
+
+    useEffect(() => {
+        const getCities = async () => {
+            try {
+                const result = await City.getCitiesOfState(
+                    selectedCountry,
+                    selectedState
+                );
+                let allCities = [];
+                allCities = result?.map(({ name }) => ({
+                    name
+                }));
+                const [{ name: firstCity = '' } = {}] = allCities;
+                setCities(allCities);
+                setSelectedCity(firstCity);
+            } catch (error) {
+                setCities([]);
+            }
+        };
+
+        getCities();
+    }, [selectedState]);
+
     return (
         <>
             <div className="w-[75%] p-4 mt-[-28px]">
@@ -261,8 +337,13 @@ export default function PersonalInformation() {
                             <tr>
                                 <td className="w-[35%]">Country</td>
                                 <td>
-                                    <select name="country1" {...register("country1")} required>
-                                        <option value="India">India</option>
+                                    <select name="country1" {...register("country1")} value={selectedCountry}
+                                        onChange={(event) => setSelectedCountry(event.target.value)} required>
+                                        {countries.map(({ isoCode, name }) => (
+                                            <option value={isoCode} key={isoCode}>
+                                                {name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </td>
                             </tr>
@@ -279,19 +360,36 @@ export default function PersonalInformation() {
                             <tr>
                                 <td>City</td>
                                 <td>
-                                    <input
-                                        type="text"
-                                        name="city1"
-                                        {...register("city1")}
-                                        required
-                                    />
+                                    <select name="city1" {...register("city1")} value={selectedCity}
+                                        onChange={(event) => setSelectedCity(event.target.value)} required>
+                                        {cities.length > 0 ? (
+                                            cities.map(({ name }) => (
+                                                <option value={name} key={name}>
+                                                    {name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="">No cities found</option>
+                                        )}
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>State</td>
                                 <td>
-                                    <select name="state1" {...register("state1")} required>
-                                        <option value="Telangana">Telangana</option>
+                                    <select name="state1" {...register("state1")} value={selectedState}
+                                        onChange={(event) => setSelectedState(event.target.value)} required>
+                                        {states.length > 0 ? (
+                                            states.map(({ isoCode, name }) => (
+                                                <option value={isoCode} key={isoCode}>
+                                                    {name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="" key="">
+                                                No state found
+                                            </option>
+                                        )}
                                     </select>
                                 </td>
                             </tr>
@@ -465,7 +563,7 @@ export default function PersonalInformation() {
                                 </td>
                             </tr>
                             <tr>
-                                <td>Social Security<br/>Number</td>
+                                <td>Social Security<br />Number</td>
                                 <td>
                                     <input
                                         type="text"
