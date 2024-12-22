@@ -25,6 +25,7 @@ public class StudentServiceImpl implements StudentService {
 		if (student == null) {
 			throw new Exception("Student not found with this email");
 		} else {
+			student.setPin(null);
 			return student;
 		}
 	}

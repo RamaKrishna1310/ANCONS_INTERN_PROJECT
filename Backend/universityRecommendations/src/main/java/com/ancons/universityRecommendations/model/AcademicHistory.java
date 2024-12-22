@@ -23,10 +23,8 @@ public class AcademicHistory {
 	private String country;
 	private String city;
 	private String state;
-	private String startYear;
-	private String startMonth;
-	private String endYear;
-	private String endMonth;
+	private String startMonthYear;
+	private String endMonthYear;
 	private String levelOfStudy;
 	
 	@ManyToOne

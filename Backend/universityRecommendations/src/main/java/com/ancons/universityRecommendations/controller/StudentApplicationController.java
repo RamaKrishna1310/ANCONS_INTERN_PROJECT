@@ -1,5 +1,6 @@
 package com.ancons.universityRecommendations.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ancons.universityRecommendations.model.StudentApplication;
 import com.ancons.universityRecommendations.service.StudentApplicationService;
@@ -23,14 +25,14 @@ public class StudentApplicationController {
 	private StudentApplicationService studentApplicationService;
 	
 	@PostMapping("/{id}/createApplication")
-	public ResponseEntity<Void> createApplication(@RequestBody StudentApplication studentApplication, @PathVariable Long id) {
-		studentApplicationService.createApplication(studentApplication, id);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<Long> createApplication(@RequestBody StudentApplication studentApplication, @PathVariable Long id) {
+		StudentApplication createdStudentApplication = studentApplicationService.createApplication(studentApplication, id);
+		return ResponseEntity.ok(createdStudentApplication.getId());
 	}
 	
-	@GetMapping("/{id}/getStudentApplication")
-	public ResponseEntity<StudentApplication> getStudentApplication(@PathVariable Long id) {
-		StudentApplication studentApplication = studentApplicationService.getStudentApplication(id);
+	@GetMapping("/{id}/getStudentApplication/{applicationId}")
+	public ResponseEntity<StudentApplication> getStudentApplication(@PathVariable Long id, @PathVariable Long applicationId) {
+		StudentApplication studentApplication = studentApplicationService.getStudentApplication(id, applicationId);
 		return ResponseEntity.ok(studentApplication);
 	}
 	

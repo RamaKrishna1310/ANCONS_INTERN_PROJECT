@@ -19,9 +19,25 @@ public class EnrollmentPlanServiceImpl implements EnrollmentPlanService {
 	@Override
 	public void saveEnrollmentPlan(EnrollmentPlan enrollmentPlan, Long id) {
 		Student existingStudent = studentRepository.findById(id).get();
-		enrollmentPlan.setStudent(existingStudent);
-		enrollmentPlanRepository.save(enrollmentPlan);
-		existingStudent.setEnrollmentPlan(enrollmentPlan);
+		if (enrollmentPlanRepository.existsByStudentId(id)) {
+			EnrollmentPlan existingEnrollmentPlan = getEnrollmentPlan(id);
+			if (enrollmentPlan.getApplicationType() != null) {
+				existingEnrollmentPlan.setApplicationType(enrollmentPlan.getApplicationType());
+			}
+			if (enrollmentPlan.getIntendedMajor() != null) {
+				existingEnrollmentPlan.setIntendedMajor(enrollmentPlan.getIntendedMajor());
+			}
+			if (enrollmentPlan.getSelectedGraduationType() != null) {
+				existingEnrollmentPlan.setSelectedGraduationType(enrollmentPlan.getSelectedGraduationType());
+			}
+			if (enrollmentPlan.getStudentType() != null) {
+				existingEnrollmentPlan.setStudentType(enrollmentPlan.getStudentType());
+			}
+			enrollmentPlanRepository.save(existingEnrollmentPlan);
+		} else {
+			enrollmentPlan.setStudent(existingStudent);
+			enrollmentPlanRepository.save(enrollmentPlan);			
+		}
 	}
 
 	@Override

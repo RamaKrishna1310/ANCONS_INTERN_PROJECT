@@ -7,8 +7,9 @@ export const registerAndGeneratePin = (data) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
     try {
         const response = await axios.post(`${API_BASE_URL}/auth/registerAndGeneratePin`, data);
+        const student = response.data;
         console.log(response);
-        dispatch({ type: REGISTER_SUCCESS})
+        dispatch({ type: REGISTER_SUCCESS, payload: student})
     } catch (error) {
         console.log(error);
         dispatch({ type: REGISTER_FAILURE, payload: error})
