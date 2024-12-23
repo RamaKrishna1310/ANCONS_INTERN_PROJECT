@@ -22,7 +22,7 @@ public class StudentApplication {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private ApplicationType type;
+	private String type;
 	private ApplicationStatus status;
 	private LocalDate startedAt;
 	

@@ -6,4 +6,5 @@ import com.ancons.universityRecommendations.model.EnrollmentPlan;
 
 public interface EnrollmentPlanRepository extends JpaRepository<EnrollmentPlan, Long> {
 	EnrollmentPlan findByStudentId(Long id);
+	boolean existsByStudentId(Long studentId);
 }

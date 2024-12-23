@@ -38,14 +38,13 @@ public class AuthController {
 	private PasswordEncoder passwordEncoder;
 
 	@PostMapping("/registerAndGeneratePin")
-	public ResponseEntity<Void> registerAndGeneratePin(@RequestBody Student student, UriComponentsBuilder ucb)
+	public ResponseEntity<Student> registerAndGeneratePin(@RequestBody Student student, UriComponentsBuilder ucb)
 			throws Exception {
-		String registeredEmail = authService.registerAndGeneratePin(student);
-		if (registeredEmail == null) {
-			throw new Exception("email already exists");
+		Student registeredStudent = authService.registerAndGeneratePin(student);
+		if (registeredStudent == null) {
+			throw new Exception("error while registering");
 		} else {
-			URI newLocation = ucb.path("/auth/{email}/verify-pin").buildAndExpand(registeredEmail).toUri();
-			return ResponseEntity.created(newLocation).build();
+			return ResponseEntity.ok(registeredStudent);
 		}
 	}
 	

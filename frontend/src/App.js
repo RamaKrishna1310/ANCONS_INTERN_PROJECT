@@ -19,24 +19,32 @@ function App() {
   useEffect(() => {
     (auth.jwt || localStorage.getItem("jwt")) &&
       dispatch(getStudentProfile(auth.jwt || localStorage.getItem("jwt")));
-  }, [auth.jwt]);
+  }, [auth.jwt, dispatch]);
 
   return (
-    <div className="flex flex-col gap-3 items-center justify-start w-full h-screen bg-gray-100">
-      <header className="text-[60px] text-red-400 p-5 bg-blue-800 w-full">
-        CAL-GENETICS
+    <div className="flex flex-col gap-3 items-center justify-start w-full h-auto bg-gray-100">
+      <header className="text-[35px] text-red-400 p-5 bg-blue-800 w-full">
+        CALGENETICS
       </header>
-      <div className="bg-white px-4 py-8 shadow-lg w-[60%]">
+      <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
         {student?.student ? (
-          <Routes>
-            <Route path="/" element={<ApplicationStatus />} />
-            <Route path="/academic-history" element={<AcademicHistory />} />
-            <Route path="/enrollment-plans" element={<EnrollmentPlans />} />
-            <Route
-              path="/personal-information"
-              element={<PersonalInformation />}
-            />
-          </Routes>
+          <>
+            <div className="flex flex-col w-[25%] p-4 gap-2 mr-4">
+              <a href="/">Home</a>
+              <a href="/personal-information">Personal Information</a>
+              <a href="/enrollment-plan">Enrollment Plan</a>
+              <a href="/academic-history">Academic History</a>
+            </div>
+            <Routes>
+              <Route path="/" element={<ApplicationStatus />} />
+              <Route path="/academic-history" element={<AcademicHistory />} />
+              <Route path="/enrollment-plan" element={<EnrollmentPlans />} />
+              <Route
+                path="/personal-information"
+                element={<PersonalInformation />}
+              />
+            </Routes>
+          </>
         ) : (
           <Routes>
             <Route path="/" element={<Application />} />

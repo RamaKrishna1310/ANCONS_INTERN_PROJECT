@@ -1,6 +1,7 @@
 import { CREATE_PASSWORD_FAILURE, CREATE_PASSWORD_REQUEST, CREATE_PASSWORD_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, VERIFY_PIN_FAILURE, VERIFY_PIN_REQUEST, VERIFY_PIN_SUCCESS } from "./ActionTypes"
 
 const initialState = {
+    student: null,
     loading: false,
     error: null,
     jwt: null,
@@ -15,6 +16,8 @@ const authReducer = (state = initialState, action) => {
             return { ...state, loading: true, error: null };
 
         case REGISTER_SUCCESS:
+            return { ...state, loading: false, student: action.payload }
+
         case VERIFY_PIN_SUCCESS:
             return { ...state, loading: false}
 

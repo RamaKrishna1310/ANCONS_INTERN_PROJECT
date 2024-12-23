@@ -1,5 +1,7 @@
 package com.ancons.universityRecommendations.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +17,46 @@ public class AcademicHistorySerivceImpl implements AcademicHistoryService {
 	private StudentRepository studentRepository;
 	@Autowired
 	private AcademicHistoryRepository academicHistoryRepository;
-	
+
 	@Override
-	public void saveAcademicHistory(AcademicHistory academicHistory, Long id) {
+	public void saveAcademicHistory(AcademicHistory academicHistory, Long id, Long historyId) {
 		Student existingStudent = studentRepository.findById(id).get();
-		academicHistory.setStudent(existingStudent);
-		academicHistoryRepository.save(academicHistory);
-		existingStudent.getAcademicHistories().add(academicHistory);
+		if (historyId != 0) {
+			AcademicHistory existingAcademicHistory = academicHistoryRepository.findById(historyId).orElseThrow();
+			if (academicHistory.getCity() != null) {
+				existingAcademicHistory.setCity(academicHistory.getCity());
+			}
+			if (academicHistory.getCountry() != null) {
+				existingAcademicHistory.setCountry(academicHistory.getCountry());
+			}
+			if (academicHistory.getEndMonthYear() != null) {
+				existingAcademicHistory.setEndMonthYear(academicHistory.getEndMonthYear());
+			}
+			if (academicHistory.getInstitutionName() != null) {
+				existingAcademicHistory.setInstitutionName(academicHistory.getInstitutionName());
+			}
+			if (academicHistory.getLevelOfStudy() != null) {
+				existingAcademicHistory.setLevelOfStudy(academicHistory.getLevelOfStudy());
+			}
+			if (academicHistory.getStartMonthYear() != null) {
+				existingAcademicHistory.setStartMonthYear(academicHistory.getStartMonthYear());
+			}
+			if (academicHistory.getState() != null) {
+				existingAcademicHistory.setState(academicHistory.getState());
+			}
+			if (academicHistory.getType() != null) {
+				existingAcademicHistory.setType(academicHistory.getType());
+			}
+			academicHistoryRepository.save(existingAcademicHistory);
+		} else {
+			academicHistory.setStudent(existingStudent);
+			academicHistoryRepository.save(academicHistory);
+		}
 	}
 
 	@Override
-	public AcademicHistory getAcademicHistory(Long id) {
-		return academicHistoryRepository.findByStudentId(id);
+	public List<AcademicHistory> getAcademicHistory(Long id) {
+		return academicHistoryRepository.findAllByStudentId(id);
 	}
 
 }

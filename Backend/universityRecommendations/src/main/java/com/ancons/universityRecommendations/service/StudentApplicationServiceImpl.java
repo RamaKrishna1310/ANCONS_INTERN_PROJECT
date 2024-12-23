@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ancons.universityRecommendations.domain.ApplicationStatus;
+import com.ancons.universityRecommendations.domain.ApplicationType;
 import com.ancons.universityRecommendations.model.Student;
 import com.ancons.universityRecommendations.model.StudentApplication;
 import com.ancons.universityRecommendations.repository.StudentApplicationRepository;
@@ -21,18 +22,17 @@ public class StudentApplicationServiceImpl implements StudentApplicationService 
 	StudentApplicationRepository studentApplicationRepository;
 	
 	@Override
-	public void createApplication(StudentApplication studentApplication, Long id) {
+	public StudentApplication createApplication(StudentApplication studentApplication, Long id) {
 		Student existingStudent = studentRepository.findById(id).get();
 		studentApplication.setStartedAt(LocalDate.now());
 		studentApplication.setStatus(ApplicationStatus.InProgress);
 		studentApplication.setStudent(existingStudent);
-		studentApplicationRepository.save(studentApplication);
-		existingStudent.getApplications().add(studentApplication);
+		return studentApplicationRepository.save(studentApplication);
 	}
 
 	@Override
-	public StudentApplication getStudentApplication(Long id) {
-		return studentApplicationRepository.findByStudentId(id);
+	public StudentApplication getStudentApplication(Long id, Long applicationId) {
+		return studentApplicationRepository.findByStudentIdAndId(id, applicationId);
 	}
 
 	@Override

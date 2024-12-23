@@ -26,10 +26,9 @@ public class AuthServiceImpl implements AuthService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public String registerAndGeneratePin(Student student) {
+	public Student registerAndGeneratePin(Student student) throws Exception {
 		if (studentRepository.existsByEmail(student.getEmail())) {
-			System.out.println("email already exists");
-			return null;
+			throw new Exception("Email already exists");
 		} else {
 			Student newStudent = new Student();
 			newStudent.setFirstName(student.getFirstName());
@@ -39,8 +38,9 @@ public class AuthServiceImpl implements AuthService {
 			Integer pin = generatePin();
 			newStudent.setPin(pin);
 			notificationServiceImpl.sendNotification(student.getEmail(), "Verification PIN", String.valueOf(pin));
-			studentRepository.save(newStudent);
-			return student.getEmail();
+			Student createdStudent = studentRepository.save(newStudent);
+			createdStudent.setPin(null);
+			return createdStudent;
 		}
 	}
 
