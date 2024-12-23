@@ -30,7 +30,7 @@ export default function Login() {
         dispatch(login(data));
         setTimeout(() => {
             !auth?.error && navigate("/");
-        }, 0);
+        }, 100);
     }
 
     return (

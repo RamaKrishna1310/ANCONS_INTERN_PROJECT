@@ -32,42 +32,46 @@ export default function SetPassword() {
         }));
         setTimeout(() => {
             !auth?.error && navigate("/");
-        }, 0);
+        }, 100);
     }
 
     return (
-        <>
-            <div className="mx-auto flex flex-col gap-2">
-                <h1 className="pl-1">Set Password</h1>
-                <p className="pl-1">To protect the security of your account, please specify a new password must meet complexity requirements.</p>
-                <form className="flex flex-col gap-3" onSubmit={handleSubmit(handleSetPassword)}>
-                    <table cellPadding={4}>
-                        <tbody>
-                            <tr>
-                                <td className="w-[25%]">New Password</td>
-                                <td><input type="password"
-                                    name="password"
-                                    {...register("password")}
-                                    placeholder="Enter your password" required
-                                /></td>
-                                {errors?.password && <td>{errors.password.message}</td>}
-                            </tr>
-                            <tr>
-                                <td>Confirm Password</td>
-                                <td><input type="password"
-                                    name="confirmPassword"
-                                    {...register("confirmPassword")}
-                                    placeholder="Re-enter your password" required
-                                /></td>
-                                {errors?.confirmPassword && <td>{errors.confirmPassword.message}</td>}
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="pl-1 pb-5">
-                        <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold text-sm" type="submit">Set Password</button>
-                    </div>
-                </form>
-            </div>
-        </>
+        !auth?.error ? (
+            <>
+                <div className="mx-auto flex flex-col gap-2">
+                    <h1 className="pl-1">Set Password</h1>
+                    <p className="pl-1">To protect the security of your account, please specify a new password must meet complexity requirements.</p>
+                    <form className="flex flex-col gap-3" onSubmit={handleSubmit(handleSetPassword)}>
+                        <table cellPadding={4}>
+                            <tbody>
+                                <tr>
+                                    <td className="w-[25%]">New Password</td>
+                                    <td><input type="password"
+                                        name="password"
+                                        {...register("password")}
+                                        placeholder="Enter your password" required
+                                    /></td>
+                                    {errors?.password && <td>{errors.password.message}</td>}
+                                </tr>
+                                <tr>
+                                    <td>Confirm Password</td>
+                                    <td><input type="password"
+                                        name="confirmPassword"
+                                        {...register("confirmPassword")}
+                                        placeholder="Re-enter your password" required
+                                    /></td>
+                                    {errors?.confirmPassword && <td>{errors.confirmPassword.message}</td>}
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className="pl-1 pb-5">
+                            <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold text-sm" type="submit">Set Password</button>
+                        </div>
+                    </form>
+                </div>
+            </>
+        ) : (
+            <p>{auth?.error?.response?.data?.message}</p>
+        )
     );
 }

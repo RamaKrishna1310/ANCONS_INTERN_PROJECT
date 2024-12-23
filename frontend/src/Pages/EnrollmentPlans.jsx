@@ -46,7 +46,7 @@ export default function EnrollmentPlans() {
         dispatch(createEnrollmentPlan(student.student.id, data));
         setTimeout(() => {
             !student.error && navigate("/academic-history");
-        }, 0);
+        }, 100);
     }
 
     useEffect(() => {

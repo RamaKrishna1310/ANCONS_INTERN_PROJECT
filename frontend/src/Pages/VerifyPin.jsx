@@ -27,7 +27,7 @@ export default function VerifyPin() {
         dispatch(verifyPin(auth?.student?.email, data));
         setTimeout(() => {
             !auth?.error && navigate("/set-password");
-        }, 0);
+        }, 100);
     }
 
     useEffect(() => {
@@ -38,47 +38,51 @@ export default function VerifyPin() {
     }, [auth?.student, reset]);
 
     return (
-        <>
-            <div className="mx-auto flex flex-col gap-2">
-                <h1 className="pl-1">Login</h1>
-                <p className="verify-pin">
-                    A temporary PIN has been sent to your email address. if you do not recieve this message in the next few minutes. please check your junk mail folder.
-                </p>
-                <form className="flex flex-col gap-3" onSubmit={handleSubmit(handleVerifyPin)}>
-                    <table cellPadding={4}>
-                        <tbody>
-                            <tr>
-                                <td className="w-[25%]">Email</td>
-                                <td>{auth?.student?.email}<a href="#"> switch</a></td>
-                            </tr>
-                            <tr>
-                                <td>Account</td>
-                                <td>{auth?.student?.lastName + " " + auth?.student?.firstName}</td>
-                            </tr>
-                            <tr>
-                                <td>Temporary PIN</td>
-                                <td><input type="text"
-                                    name="pin"
-                                    {...register("pin")}
-                                    required
-                                /></td>
-                            </tr>
-                            <tr>
-                                <td>Birthdate</td>
-                                <td><input type="date"
-                                    name="dateOfBirth"
-                                    {...register("dateOfBirth")}
-                                    required
-                                /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="pl-1 pb-5">
-                        <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold" type="submit">Login</button>
-                    </div>
-                </form>
-                <p><span className="font-bold text-base">First-time users: </span><a href="/register">Cilck Here</a> to create an account.</p>
-            </div>
-        </>
+        !auth?.error ? (
+            <>
+                <div className="mx-auto flex flex-col gap-2">
+                    <h1 className="pl-1">Login</h1>
+                    <p className="verify-pin">
+                        A temporary PIN has been sent to your email address. if you do not recieve this message in the next few minutes. please check your junk mail folder.
+                    </p>
+                    <form className="flex flex-col gap-3" onSubmit={handleSubmit(handleVerifyPin)}>
+                        <table cellPadding={4}>
+                            <tbody>
+                                <tr>
+                                    <td className="w-[25%]">Email</td>
+                                    <td>{auth?.student?.email}<a href="#"> switch</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Account</td>
+                                    <td>{auth?.student?.lastName + " " + auth?.student?.firstName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Temporary PIN</td>
+                                    <td><input type="text"
+                                        name="pin"
+                                        {...register("pin")}
+                                        required
+                                    /></td>
+                                </tr>
+                                <tr>
+                                    <td>Birthdate</td>
+                                    <td><input type="date"
+                                        name="dateOfBirth"
+                                        {...register("dateOfBirth")}
+                                        required
+                                    /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className="pl-1 pb-5">
+                            <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold" type="submit">Login</button>
+                        </div>
+                    </form>
+                    <p><span className="font-bold text-base">First-time users: </span><a href="/register">Cilck Here</a> to create an account.</p>
+                </div>
+            </>
+        ) : (
+            <p>{auth?.error?.response?.data?.message}</p>
+        )
     );
 }

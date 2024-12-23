@@ -53,7 +53,7 @@ export default function ApplicationStatus() {
     dispatch(createApplication(student?.student?.id, data));
     setTimeout(() => {
       !student?.error && handleSecondOpen();
-    }, 0);
+    }, 100);
   };
 
   const handleOpenApplication = () => {

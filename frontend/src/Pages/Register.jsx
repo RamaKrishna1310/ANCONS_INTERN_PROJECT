@@ -35,7 +35,7 @@ export default function Register() {
         dispatch(registerAndGeneratePin(data));
         setTimeout(() => {
             !auth?.error && navigate("/verify-pin");
-        }, 0);
+        }, 100);
     }
 
     return (
@@ -58,6 +58,13 @@ export default function Register() {
                                     placeholder="Enter your email" required
                                     />
                                 </td>
+                                {
+                                    auth?.error && (
+                                        <td>
+                                            {auth.error.response.data.message}
+                                        </td>
+                                    )
+                                }
                             </tr>
                             <tr>
                                 <td>First Name</td>

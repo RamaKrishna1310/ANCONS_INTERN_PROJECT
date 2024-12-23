@@ -131,7 +131,7 @@ export default function PersonalInformation() {
         dispatch(createPersonalInformation(student?.student?.id, studentDto));
         setTimeout(() => {
             !student?.error && navigate("/enrollment-plan");
-        }, 0);
+        }, 100);
     };
 
     useEffect(() => {

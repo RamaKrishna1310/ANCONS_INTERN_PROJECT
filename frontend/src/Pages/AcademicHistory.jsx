@@ -10,7 +10,7 @@ export default function AcademicHistory() {
     const [openSchoolDialog, setOpenSchoolDialog] = useState(false);
     const [instituteData, setInstituteData] = useState({});
     const [schoolData, setSchoolData] = useState({});
-    const [update, setUpdate] = useState(false);
+    const [update, setUpdate] = useState(0);
 
     const { student } = useSelector((store) => store);
 

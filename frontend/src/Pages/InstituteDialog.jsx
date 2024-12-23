@@ -41,8 +41,8 @@ export default function InstituteDialog({ open, onClose, instituteData, update }
         dispatch(createAcademicHistory(student.student.id, historyId, data));
         onClose();
         setTimeout(() => {
-            update(prev => !prev);
-        }, 0);
+            update(Math.floor((Math.random() * 100) + 1));
+        }, 100);
     }
 
     useEffect(() => {
