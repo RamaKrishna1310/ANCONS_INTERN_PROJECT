@@ -29,6 +29,7 @@ const formSchema = z.object({
     city2: z.string(),
     state2: z.string(),
     postalCode2: z.string().refine((num) => Number(num)),
+    email: z.string({message: "please provide email"}),
     dayTimeNo: z.string(),
     homePhone: z.string(),
     cellPhone: z.string(),
@@ -36,9 +37,9 @@ const formSchema = z.object({
     dateOfBirth: z.string().date(),
     primaryCitizenship: z.string(),
     dualCitizenship: z.string(),
-    socialSecurityNumber: z.string(),
-    hispanicOrLatino: z.string(),
-    memberGroups: z.string().array(),
+    // socialSecurityNumber: z.string(),
+    // hispanicOrLatino: z.string(),
+    // memberGroups: z.string().array(),
 });
 
 export default function PersonalInformation() {
@@ -46,15 +47,24 @@ export default function PersonalInformation() {
     const dispatch = useDispatch();
     const { student } = useSelector((store) => store);
 
+    const [changeEmail, setChangeEmail] = useState(false);
+
     const [countries, setCountries] = useState([]);
-    const [states, setStates] = useState([]);
-    const [cities, setCities] = useState([]);
+    const [states1, setStates1] = useState([]);
+    const [cities1, setCities1] = useState([]);
+    const [states2, setStates2] = useState([]);
+    const [cities2, setCities2] = useState([]);
 
-    const [selectedCountry, setSelectedCountry] = useState('');
-    const [selectedState, setSelectedState] = useState('');
-    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedCountry1, setSelectedCountry1] = useState('');
+    const [selectedState1, setSelectedState1] = useState('');
+    const [selectedCity1, setSelectedCity1] = useState('');
+    const [selectedCountry2, setSelectedCountry2] = useState('');
+    const [selectedState2, setSelectedState2] = useState('');
+    const [selectedCity2, setSelectedCity2] = useState('');
 
-    const { form, reset, handleSubmit, register } = useForm({
+    const [showDiv, setShowDiv] = useState(false);
+
+    const { form, formState: { errors }, reset, handleSubmit, register } = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             firstName: "",
@@ -74,6 +84,7 @@ export default function PersonalInformation() {
             city2: "",
             state2: "",
             postalCode2: "",
+            email: "",
             dayTimeNo: "",
             homePhone: "",
             cellPhone: "",
@@ -81,9 +92,9 @@ export default function PersonalInformation() {
             dateOfBirth: null,
             primaryCitizenship: "",
             dualCitizenship: "",
-            socialSecurityNumber: "",
-            hispanicOrLatino: "",
-            memberGroups: [],
+            // socialSecurityNumber: "",
+            // hispanicOrLatino: "",
+            // memberGroups: [],
         },
     });
 
@@ -92,6 +103,7 @@ export default function PersonalInformation() {
             firstName: data.firstName,
             lastName: data.lastName,
             dateOfBirth: data.dateOfBirth,
+            email: data.email,
             personalInformation: {
                 middleName: data.middleName,
                 otherFirstName: data.otherFirstName,
@@ -104,9 +116,9 @@ export default function PersonalInformation() {
                 gender: data.gender,
                 primaryCitizenship: data.primaryCitizenship,
                 dualCitizenship: data.dualCitizenship,
-                socialSecurityNumber: data.socialSecurityNumber,
-                hispanicOrLatino: data.hispanicOrLatino,
-                memberGroups: [...data.memberGroups],
+                socialSecurityNumber: data.primaryCitizenship === "United States" ? data.socialSecurityNumber : "",
+                hispanicOrLatino: data.primaryCitizenship === "United States" ? data.hispanicOrLatino : "",
+                memberGroups: data.primaryCitizenship === "United States" ? [...data.memberGroups] : [],
             },
             addresses: [
                 {
@@ -127,12 +139,14 @@ export default function PersonalInformation() {
                 },
             ],
         };
-        console.log("personalInformationFormData ", data);
+        console.log("form data ", data);
+        console.log("personalInformationFormData ", studentDto);
         dispatch(createPersonalInformation(student?.student?.id, studentDto));
-        setTimeout(() => {
-            !student?.error && navigate("/enrollment-plan");
-        }, 100);
     };
+
+    useEffect(() => {
+        student?.createdPersonalInformationResponse && navigate("/enrollment-plan");
+    }, [student?.createdPersonalInformationResponse, navigate]);
 
     useEffect(() => {
         if (student?.student?.id) {
@@ -161,6 +175,7 @@ export default function PersonalInformation() {
                 city2: student?.addresses[1]?.city || "",
                 state2: student?.addresses[1]?.state || "",
                 postalCode2: String(student?.addresses[1]?.postalCode) || "",
+                email: student?.student?.email || "",
                 dayTimeNo: student?.personalInformation?.dayTimeNo || "",
                 homePhone: student?.personalInformation?.homePhone || "",
                 cellPhone: student?.personalInformation?.cellPhone || "",
@@ -169,7 +184,7 @@ export default function PersonalInformation() {
                 primaryCitizenship: student?.personalInformation?.primaryCitizenship || "",
                 dualCitizenship: student?.personalInformation?.dualCitizenship || "",
                 socialSecurityNumber: student?.personalInformation?.socialSecurityNumber || "",
-                hispanicOrLatino: student?.personalInformation?.hispanicOrLatino ? "TRUE" : "FALSE",
+                hispanicOrLatino: student?.personalInformation?.hispanicOrLatino !== null ? student?.personalInformation?.hispanicOrLatino ? "TRUE" : "FALSE" : "",
                 memberGroups: student?.personalInformation?.memberGroups,
             })
         }
@@ -186,66 +201,116 @@ export default function PersonalInformation() {
                 }));
                 const [{ isoCode: firstCountry } = {}] = allCountries;
                 setCountries(allCountries);
-                setSelectedCountry(firstCountry);
+                setSelectedCountry1(student?.addresses[0]?.country || firstCountry);
+                setSelectedCountry2(student?.addresses[1]?.country || firstCountry);
             } catch (error) {
                 setCountries([]);
             }
         };
 
         getCountries();
-    }, []);
+    }, [student?.addresses]);
 
     useEffect(() => {
-        const getStates = async () => {
+        const getStates1 = async () => {
             try {
-                const result = await State.getStatesOfCountry(selectedCountry);
-                let allStates = [];
-                allStates = result?.map(({ isoCode, name }) => ({
+                const result = await State.getStatesOfCountry(selectedCountry1);
+                let allStates1 = [];
+                allStates1 = result?.map(({ isoCode, name }) => ({
                     isoCode,
                     name
                 }));
-                const [{ isoCode: firstState = '' } = {}] = allStates;
-                setCities([]);
-                setSelectedCity('');
-                setStates(allStates);
-                setSelectedState(firstState);
+                const [{ isoCode: firstState = '' } = {}] = allStates1;
+                setCities1([]);
+                setSelectedCity1('');
+                setStates1(allStates1);
+                setSelectedState1(student?.addresses[0]?.state || firstState);
             } catch (error) {
-                setStates([]);
-                setCities([]);
-                setSelectedCity('');
+                setStates1([]);
+                setCities1([]);
+                setSelectedCity1('');
             }
         };
 
-        getStates();
-    }, [selectedCountry]);
+        getStates1();
+    }, [selectedCountry1, student?.addresses]);
 
     useEffect(() => {
-        const getCities = async () => {
+        const getCities1 = async () => {
             try {
                 const result = await City.getCitiesOfState(
-                    selectedCountry,
-                    selectedState
+                    selectedCountry1,
+                    selectedState1
                 );
-                let allCities = [];
-                allCities = result?.map(({ name }) => ({
+                let allCities1 = [];
+                allCities1 = result?.map(({ name }) => ({
                     name
                 }));
-                const [{ name: firstCity = '' } = {}] = allCities;
-                setCities(allCities);
-                setSelectedCity(firstCity);
+                const [{ name: firstCity = '' } = {}] = allCities1;
+                setCities1(allCities1);
+                setSelectedCity1(student?.addresses[0]?.city || firstCity);
             } catch (error) {
-                setCities([]);
+                setCities1([]);
             }
         };
 
-        getCities();
-    }, [selectedState]);
+        getCities1();
+    }, [selectedState1, student?.addresses]);
+
+    useEffect(() => {
+        const getStates2 = async () => {
+            try {
+                const result = await State.getStatesOfCountry(selectedCountry2);
+                let allStates2 = [];
+                allStates2 = result?.map(({ isoCode, name }) => ({
+                    isoCode,
+                    name
+                }));
+                const [{ isoCode: firstState = '' } = {}] = allStates2;
+                setCities2([]);
+                setSelectedCity2('');
+                setStates2(allStates2);
+                setSelectedState2(student?.addresses[1]?.state || firstState);
+            } catch (error) {
+                setStates2([]);
+                setCities2([]);
+                setSelectedCity2('');
+            }
+        };
+
+        getStates2();
+    }, [selectedCountry2, student?.addresses]);
+
+    useEffect(() => {
+        const getCities2 = async () => {
+            try {
+                const result = await City.getCitiesOfState(
+                    selectedCountry2,
+                    selectedState2
+                );
+                let allCities2 = [];
+                allCities2 = result?.map(({ name }) => ({
+                    name
+                }));
+                const [{ name: firstCity = '' } = {}] = allCities2;
+                setCities2(allCities2);
+                setSelectedCity2(student?.addresses[1]?.city || firstCity);
+            } catch (error) {
+                setCities2([]);
+            }
+        };
+
+        getCities2();
+    }, [selectedState2, student?.addresses]);
 
     return (
         <>
             <div className="w-[75%] p-4 mt-[-28px]">
                 <form onSubmit={handleSubmit(handleCreatePersonalInformation)}>
                     <h1>Personal Information</h1>
+                    {
+                        student?.error && (<p className="text-red-500">Error while processing data, please try again</p>)
+                    }
                     <p>
                         Please enter your information in each of the following sections. Fields with an asterik(*) are required and must be completed before you can submit your application. Additional questions may become required based on your answers to a previous question.{" "}
                         <span className="font-bold text-base">
@@ -337,8 +402,10 @@ export default function PersonalInformation() {
                             <tr>
                                 <td className="w-[35%]">Country</td>
                                 <td>
-                                    <select name="country1" {...register("country1")} value={selectedCountry}
-                                        onChange={(event) => setSelectedCountry(event.target.value)} required>
+                                    <select name="country1" {...register("country1")} value={selectedCountry1}
+                                        onChange={(event) =>
+                                            setSelectedCountry1(event.target.value)
+                                        } required>
                                         {countries.map(({ isoCode, name }) => (
                                             <option value={isoCode} key={isoCode}>
                                                 {name}
@@ -360,10 +427,10 @@ export default function PersonalInformation() {
                             <tr>
                                 <td>City</td>
                                 <td>
-                                    <select name="city1" {...register("city1")} value={selectedCity}
-                                        onChange={(event) => setSelectedCity(event.target.value)} required>
-                                        {cities.length > 0 ? (
-                                            cities.map(({ name }) => (
+                                    <select name="city1" {...register("city1")} value={selectedCity1}
+                                        onChange={(event) => setSelectedCity1(event.target.value)} required>
+                                        {cities1.length > 0 ? (
+                                            cities1.map(({ name }) => (
                                                 <option value={name} key={name}>
                                                     {name}
                                                 </option>
@@ -377,10 +444,10 @@ export default function PersonalInformation() {
                             <tr>
                                 <td>State</td>
                                 <td>
-                                    <select name="state1" {...register("state1")} value={selectedState}
-                                        onChange={(event) => setSelectedState(event.target.value)} required>
-                                        {states.length > 0 ? (
-                                            states.map(({ isoCode, name }) => (
+                                    <select name="state1" {...register("state1")} value={selectedState1}
+                                        onChange={(event) => setSelectedState1(event.target.value)} required>
+                                        {states1.length > 0 ? (
+                                            states1.map(({ isoCode, name }) => (
                                                 <option value={isoCode} key={isoCode}>
                                                     {name}
                                                 </option>
@@ -414,8 +481,13 @@ export default function PersonalInformation() {
                             <tr>
                                 <td className="w-[35%]">Country</td>
                                 <td>
-                                    <select name="country2" {...register("country2")}>
-                                        <option value="India">India</option>
+                                    <select name="country2" {...register("country2")} value={selectedCountry2}
+                                        onChange={(event) => setSelectedCountry2(event.target.value)} required>
+                                        {countries.map(({ isoCode, name }) => (
+                                            <option value={isoCode} key={isoCode}>
+                                                {name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </td>
                             </tr>
@@ -431,14 +503,36 @@ export default function PersonalInformation() {
                             <tr>
                                 <td>City</td>
                                 <td>
-                                    <input type="text" name="city2" {...register("city2")} />
+                                    <select name="city2" {...register("city2")} value={selectedCity2}
+                                        onChange={(event) => setSelectedCity2(event.target.value)} required>
+                                        {cities2.length > 0 ? (
+                                            cities2.map(({ name }) => (
+                                                <option value={name} key={name}>
+                                                    {name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="">No cities found</option>
+                                        )}
+                                    </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>State</td>
                                 <td>
-                                    <select name="state2" {...register("state2")}>
-                                        <option value="Telangana">Telangana</option>
+                                    <select name="state2" {...register("state2")} value={selectedState2}
+                                        onChange={(event) => setSelectedState2(event.target.value)} required>
+                                        {states2.length > 0 ? (
+                                            states2.map(({ isoCode, name }) => (
+                                                <option value={isoCode} key={isoCode}>
+                                                    {name}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="" key="">
+                                                No state found
+                                            </option>
+                                        )}
                                     </select>
                                 </td>
                             </tr>
@@ -461,10 +555,27 @@ export default function PersonalInformation() {
                         <tbody>
                             <tr>
                                 <td className="w-[35%]">Current Email</td>
-                                <td>{student?.student?.email}</td>
-                                <td>
-                                    <a href="">Change Email</a>
-                                </td>
+                                {
+                                    errors?.email && (<p>{errors.email.message}</p>)
+                                }
+                                {
+                                    changeEmail ? (
+                                        <td>
+                                            <input type="email"
+                                                name="email"
+                                                {...register("email")}
+                                                required
+                                            />
+                                        </td>) : (<td>{student?.student?.email}</td>)
+                                }
+                                {
+                                    !changeEmail && (
+                                        <td>
+                                            <button onClick={() => setChangeEmail(true)} className="border-none bg-transparent text-blue-700 cursor-pointer font-bold underline">Change Email</button>
+                                        </td>
+                                    )
+                                }
+
                             </tr>
                         </tbody>
                     </table>
@@ -545,9 +656,17 @@ export default function PersonalInformation() {
                                     <select
                                         name="primaryCitizenship"
                                         {...register("primaryCitizenship")}
+                                        onChange={(event) => {
+                                            event.target.value === "United States" ? setShowDiv(true) : setShowDiv(false);
+                                        }
+                                        }
                                         required
                                     >
-                                        <option value="India">India</option>
+                                        {countries.map(({ isoCode, name }) => (
+                                            <option value={name} key={isoCode}>
+                                                {name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </td>
                             </tr>
@@ -558,124 +677,135 @@ export default function PersonalInformation() {
                                         name="dualCitizenship"
                                         {...register("dualCitizenship")}
                                     >
-                                        <option value="United States">United States</option>
+                                        <option value="None">None</option>
+                                        {countries.map(({ isoCode, name }) => (
+                                            <option value={name} key={isoCode}>
+                                                {name}
+                                            </option>
+                                        ))}
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Social Security<br />Number</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="socialSecurityNumber"
-                                        {...register("socialSecurityNumber")}
-                                    />
-                                    (omit dashes)<a href=""> Privacy Protection Policy</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Race/Ethinicity</td>
-                                <td>
-                                    Colleges and universities are asked by many groups, Including the federal government accrediting associations, college guides, and newspapers, to describe the ethnic/racial  backgrounds of their students and employees. In order to respond to these requests, we ask you to answer the following two questions.
-                                    <span>
-                                        {" "}
-                                        <a href="">View Definitions</a>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Are you Hispanic or Latino?</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <p className="pl-6 m-0">
-                                        <input
-                                            type="radio"
-                                            name="hispanicOrLatino"
-                                            {...register("hispanicOrLatino")}
-                                            value="TRUE"
-                                        />
-                                        Yes
-                                    </p>
-                                    <p className="pl-6 m-0">
-                                        <input
-                                            type="radio"
-                                            name="hispanicOrLatino"
-                                            {...register("hispanicOrLatino")}
-                                            value="FALSE"
-                                        />
-                                        No
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <p className="mb-2">
-                                    Regardless of your answer to the prior question. please check one or more of the following groups in which you consider yourself to be a member.
-                                </p>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="American Indian or Alaska Native"
-                                    />
-                                    American Indian or Alaska Native
-                                </p>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="Asian"
-                                    />
-                                    Asian
-                                </p>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="Black or African America"
-                                    />
-                                    Black or African America
-                                </p>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="Native Hawaiian or Other Pacific"
-                                    />
-                                    Native Hawaiian or Other Pacific
-                                </p>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="Other"
-                                    />
-                                    Other
-                                </p>
-                                <p className="pl-6 m-0">
-                                    <input
-                                        type="checkbox"
-                                        name="memberGroups"
-                                        {...register("memberGroups")}
-                                        value="White"
-                                    />
-                                    White
-                                </p>
-                            </tr>
+                            {
+                                showDiv && (
+                                    <>
+                                        <tr>
+                                            <td>Social Security<br />Number</td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    name="socialSecurityNumber"
+                                                    {...register("socialSecurityNumber")}
+                                                />
+                                                (omit dashes)<a href=""> Privacy Protection Policy</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Race/Ethinicity</td>
+                                            <td>
+                                                Colleges and universities are asked by many groups, Including the federal government accrediting associations, college guides, and newspapers, to describe the ethnic/racial  backgrounds of their students and employees. In order to respond to these requests, we ask you to answer the following two questions.
+                                                <span>
+                                                    {" "}
+                                                    <a href="">View Definitions</a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Are you Hispanic or Latino?</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <p className="pl-6 m-0">
+                                                    <input
+                                                        type="radio"
+                                                        name="hispanicOrLatino"
+                                                        {...register("hispanicOrLatino")}
+                                                        value="TRUE"
+                                                    />
+                                                    Yes
+                                                </p>
+                                                <p className="pl-6 m-0">
+                                                    <input
+                                                        type="radio"
+                                                        name="hispanicOrLatino"
+                                                        {...register("hispanicOrLatino")}
+                                                        value="FALSE"
+                                                    />
+                                                    No
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <p className="mb-2">
+                                                Regardless of your answer to the prior question. please check one or more of the following groups in which you consider yourself to be a member.
+                                            </p>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="American Indian or Alaska Native"
+                                                />
+                                                American Indian or Alaska Native
+                                            </p>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="Asian"
+                                                />
+                                                Asian
+                                            </p>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="Black or African America"
+                                                />
+                                                Black or African America
+                                            </p>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="Native Hawaiian or Other Pacific"
+                                                />
+                                                Native Hawaiian or Other Pacific
+                                            </p>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="Other"
+                                                />
+                                                Other
+                                            </p>
+                                            <p className="pl-6 m-0">
+                                                <input
+                                                    type="checkbox"
+                                                    name="memberGroups"
+                                                    {...register("memberGroups")}
+                                                    value="White"
+                                                />
+                                                White
+                                            </p>
+                                        </tr>
+                                    </>
+                                )
+                            }
                         </tbody>
                     </table>
-                    <button className="border-none bg-[#5D4DC9] text-white py-1 px-6 rounded-sm font-bold" type="submit">Continue</button>
+                    <button className="border-none bg-[#5D4DC9] text-white py-1 px-6 rounded-sm font-bold mt-2 cursor-pointer" type="submit">Continue</button>
                 </form>
             </div>
         </>

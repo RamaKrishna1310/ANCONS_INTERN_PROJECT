@@ -25,9 +25,6 @@ export default function VerifyPin() {
     const handleVerifyPin = (data) => {
         console.log("Verify Pin data", data);
         dispatch(verifyPin(auth?.student?.email, data));
-        setTimeout(() => {
-            !auth?.error && navigate("/set-password");
-        }, 100);
     }
 
     useEffect(() => {
@@ -36,6 +33,10 @@ export default function VerifyPin() {
             dateOfBirth: auth?.student?.dateOfBirth,
         })
     }, [auth?.student, reset]);
+
+    useEffect(() => {
+        auth?.isVerified && navigate("/set-password");
+    }, [auth?.isVerified])
 
     return (
         !auth?.error ? (

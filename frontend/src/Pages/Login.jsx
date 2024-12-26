@@ -4,6 +4,7 @@ import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/Auth/Action";
+import { useEffect } from "react";
 
 
 const formSchema = z.object({
@@ -28,15 +29,19 @@ export default function Login() {
     const onSubmit = (data) => {
         console.log(data);
         dispatch(login(data));
-        setTimeout(() => {
-            !auth?.error && navigate("/");
-        }, 100);
     }
+
+    useEffect(() => {
+        auth?.jwt && navigate("/");
+    }, [auth.jwt]);
 
     return (
         <>
             <div className="mx-auto flex flex-col gap-2">
                 <h1 className="pl-1">Login</h1>
+                {
+                    auth?.error && (<p className="text-red-500">Invalid Email or Password</p>)
+                }
                 <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
                     <table cellPadding={4}>
                         <tbody>
@@ -58,6 +63,7 @@ export default function Login() {
                     </table>
                     <div className="pl-1 pb-5">
                         <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold" type="submit">Login</button>
+                        <a href="/forgot-password" className="text-[#5D4DC9] pl-2 ml-2">Forgot Password?</a>
                     </div>
                 </form>
             </div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,19 @@ public class AuthController {
  			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 		}
 	}
+	
+	@PostMapping("/{email}/forgot-password")
+	public ResponseEntity<String> forgotPassword(@PathVariable String email) throws Exception {
+		String message = authService.forgotPassword(email);
+		return ResponseEntity.ok(message);
+	}
+	
+	@PutMapping("/reset-password")
+	public ResponseEntity<AuthResponse> resetPassword(@RequestParam String token, @RequestParam String password) throws Exception {
+		AuthResponse authResponse = authService.resetPassword(token, password);
+		return ResponseEntity.ok(authResponse);
+	}
+	
 	@PostMapping("/login")
 	public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
 

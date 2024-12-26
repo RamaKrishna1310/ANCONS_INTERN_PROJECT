@@ -37,6 +37,9 @@ export default function AcademicHistory() {
         <>
             <div className="w-[75%] p-4 mt-[-28px]">
                 <h1>Academic History</h1>
+                {
+                    student?.error && (<p className="text-red-500">Error while processing data, please try again</p>)
+                }
                 <table>
                     <thead>
                         <tr className="bg-gray-400 w-[100%] font-bold text-base">
@@ -98,9 +101,12 @@ export default function AcademicHistory() {
                                     </tr>
                                 </>
                             ) : (
-                                <td className="w-[45%]">
-                                    <p>You must add your instituition before you may add your school official</p>
-                                </td>
+                                <tr>
+                                    <td className="w-[45%]">
+                                        <p>You must add your instituition before you may add your school official</p>
+                                    </td>
+                                </tr>
+
                             )
                         }
                     </tbody>
