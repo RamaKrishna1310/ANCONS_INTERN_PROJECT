@@ -147,7 +147,7 @@ export const createPersonalInformation = (id, data) => async(dispatch) => {
             }
         })
         console.log("createPersonalInformation ", response);
-        dispatch({type: CREATE_PERSONAL_INFORMATION_SUCCESS, payload: response.data})
+        dispatch({type: CREATE_PERSONAL_INFORMATION_SUCCESS, payload: response})
     } catch (error) {
         console.log(error);
         dispatch({type: CREATE_PERSONAL_INFORMATION_FAILURE, payload: error})

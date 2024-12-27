@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 import { createAcademicHistory } from "../redux/Student/Action";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Country, State, City } from 'country-state-city';
 
 
 const formSchema = z.object({
@@ -21,6 +22,79 @@ export default function SchoolDialog({ open, onClose, schoolData, update }) {
 
     const dispatch = useDispatch();
     const { student } = useSelector((store) => store);
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+
+    useEffect(() => {
+        const getCountries = async () => {
+            try {
+                const result = await Country.getAllCountries();
+                let allCountries = [];
+                allCountries = result?.map(({ isoCode, name }) => ({
+                    isoCode,
+                    name
+                }));
+                const [{ isoCode: firstCountry } = {}] = allCountries;
+                setCountries(allCountries);
+                setSelectedCountry(schoolData?.country || firstCountry);
+            } catch (error) {
+                setCountries([]);
+            }
+        };
+
+        getCountries();
+    }, [schoolData]);
+
+    useEffect(() => {
+        const getStates = async () => {
+            try {
+                const result = await State.getStatesOfCountry(selectedCountry);
+                let allStates = [];
+                allStates = result?.map(({ isoCode, name }) => ({
+                    isoCode,
+                    name
+                }));
+                const [{ isoCode: firstState = '' } = {}] = allStates;
+                setCities([]);
+                setSelectedCity('');
+                setStates(allStates);
+                setSelectedState(schoolData?.state || firstState);
+            } catch (error) {
+                setStates([]);
+                setCities([]);
+                setSelectedCity('');
+            }
+        };
+
+        getStates();
+    }, [selectedCountry, schoolData]);
+
+    useEffect(() => {
+        const getCities = async () => {
+            try {
+                const result = await City.getCitiesOfState(
+                    selectedCountry,
+                    selectedState
+                );
+                let allCities = [];
+                allCities = result?.map(({ name }) => ({
+                    name
+                }));
+                const [{ name: firstCity = '' } = {}] = allCities;
+                setCities(allCities);
+                setSelectedCity(schoolData?.city || firstCity);
+            } catch (error) {
+                setCities([]);
+            }
+        };
+
+        getCities();
+    }, [selectedState, schoolData]);
 
     const { form, reset, handleSubmit, register } = useForm({
         resolver: zodResolver(formSchema),
@@ -36,14 +110,24 @@ export default function SchoolDialog({ open, onClose, schoolData, update }) {
     });
 
     const handleSubmitSchool = (data) => {
-        data.type = "school"
         const historyId = schoolData?.id || 0;
-        dispatch(createAcademicHistory(student.student.id, historyId, data));
+        const historyData = {
+            type: "school",
+            institutionName: data.institutionName,
+            country: data.country,
+            city: data.city,
+            state: data.state,
+            startMonthYear: data.startMonthYear,
+            endMonthYear: data.endMonthYear,
+            levelOfStudy: data.levelOfStudy,
+        };
+        dispatch(createAcademicHistory(student?.student?.id, historyId, historyData));
         onClose();
-        setTimeout(() => {
-            update(Math.floor((Math.random() * 100) + 1));
-        }, 100);
     }
+
+    useEffect(() => {
+        student?.createdAcademicHistoryResponse && update(Math.floor((Math.random() * 100) + 1));
+    }, [student?.createdAcademicHistoryResponse, update])
 
     useEffect(() => {
         reset({
@@ -72,22 +156,49 @@ export default function SchoolDialog({ open, onClose, schoolData, update }) {
                         <tr>
                             <td>Country</td>
                             <td>
-                                <select name="country" {...register("country")} required>
-                                    <option value="India">India</option>
-                                    <option value="United State">United State</option>
+                                <select name="country" {...register("country")} value={selectedCountry}
+                                    onChange={(event) => setSelectedCountry(event.target.value)} required>
+                                    {countries.map(({ isoCode, name }) => (
+                                        <option value={isoCode} key={isoCode}>
+                                            {name}
+                                        </option>
+                                    ))}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>City</td>
-                            <td><input type="text" name="city" {...register("city")} required /></td>
+                            <td>
+                                <select name="city" {...register("city")} value={selectedCity}
+                                    onChange={(event) => setSelectedCity(event.target.value)} required>
+                                    {cities.length > 0 ? (
+                                        cities.map(({ name }) => (
+                                            <option value={name} key={name}>
+                                                {name}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <option value="">No cities found</option>
+                                    )}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td>State</td>
                             <td>
-                                <select name="state" {...register("state")} required>
-                                    <option value="Telangana">Telangana</option>
-                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <select name="state" {...register("state")} value={selectedState}
+                                    onChange={(event) => setSelectedState(event.target.value)} required>
+                                    {states.length > 0 ? (
+                                        states.map(({ isoCode, name }) => (
+                                            <option value={isoCode} key={isoCode}>
+                                                {name}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <option value="" key="">
+                                            No state found
+                                        </option>
+                                    )}
                                 </select>
                             </td>
                         </tr>

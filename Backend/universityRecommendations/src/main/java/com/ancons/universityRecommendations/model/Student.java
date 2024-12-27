@@ -1,6 +1,7 @@
 package com.ancons.universityRecommendations.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class Student {
 	private Integer pin;
 	private String password;
 	private String role;
+	private String passwordResetToken;
+	private LocalDateTime passwordCreationTime;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)

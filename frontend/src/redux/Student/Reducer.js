@@ -12,7 +12,6 @@ const initialState = {
     addresses: [],
     enrollmentPlan: null,
     academicHistory: [],
-    createdResponse: null,
 }
 
 const studentReducer = (state = initialState, action) => {
@@ -52,10 +51,13 @@ const studentReducer = (state = initialState, action) => {
             return { ...state, loading: false, academicHistory: [...action.payload]}
 
         case CREATE_STUDENT_APPLICATION_SUCCESS:
+            return { ...state, loading: false, createdStudentApplicationResponse: action.payload}
         case CREATE_PERSONAL_INFORMATION_SUCCESS:
+            return { ...state, loading: false, createdPersonalInformationResponse: action.payload}
         case CREATE_ENROLLMENT_PLAN_SUCCESS:
+            return { ...state, loading: false, createdEnrollmentPlanResponse: action.payload}
         case CREATE_ACADEMIC_HISTORY_SUCCESS:
-            return { ...state, loading: false, createdResponse: action.payload}
+            return { ...state, loading: false, createdAcademicHistoryResponse: action.payload}
 
         case GET_STUDENT_FAILURE:
         case GET_STUDENT_APPLICATION_FAILURE:

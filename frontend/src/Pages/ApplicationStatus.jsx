@@ -51,10 +51,11 @@ export default function ApplicationStatus() {
     handleFirstClose();
     console.log(data);
     dispatch(createApplication(student?.student?.id, data));
-    setTimeout(() => {
-      !student?.error && handleSecondOpen();
-    }, 100);
   };
+
+  useEffect(() => {
+    student?.createdStudentApplicationResponse && handleSecondOpen();
+  }, [student?.createdStudentApplicationResponse]);
 
   const handleOpenApplication = () => {
     navigate("/personal-information");
@@ -64,15 +65,15 @@ export default function ApplicationStatus() {
     if (student?.student?.id) {
       dispatch(getStudentApplications(student?.student?.id));
     }
-    if (student?.student?.id && student?.createdResponse?.data) {
+    if (student?.student?.id && student?.createdStudentApplicationResponse?.data) {
       dispatch(
         getStudentApplication(
           student?.student?.id,
-          student?.createdResponse?.data
+          student?.createdStudentApplicationResponse?.data
         )
       );
     }
-  }, [student?.student?.id, dispatch, student?.createdResponse?.data]);
+  }, [student?.student?.id, dispatch, student?.createdStudentApplicationResponse?.data]);
 
   return (
     <>
@@ -91,6 +92,9 @@ export default function ApplicationStatus() {
         <p className="bg-gray-400 w-[100%] font-bold text-base">
           Your Applications
         </p>
+        {
+          student?.error && (<p className="text-red-500">Error while processing application</p>)
+        }
         <table>
           <thead>
             <tr className="bg-gray-200 w-[100%] font-bold text-base">
@@ -160,18 +164,20 @@ export default function ApplicationStatus() {
             <DialogTitle style={{ fontWeight: 600, fontSize: 28, color: "#5D4DC9", paddingTop: "0" }}>Application Details</DialogTitle>
             <div className="px-5 flex flex-col gap-5">
               <table>
-                <tr>
-                  <td className="font-semibold">Started</td>
-                  <td className="text-sm">{student?.studentApplication?.startedAt}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Status</td>
-                  <td className="text-sm">{student?.studentApplication?.status}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Type</td>
-                  <td className="text-sm">{student?.studentApplication?.type}</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td className="font-semibold">Started</td>
+                    <td className="text-sm">{student?.studentApplication?.startedAt}</td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold">Status</td>
+                    <td className="text-sm">{student?.studentApplication?.status}</td>
+                  </tr>
+                  <tr>
+                    <td className="font-semibold">Type</td>
+                    <td className="text-sm">{student?.studentApplication?.type}</td>
+                  </tr>
+                </tbody>
               </table>
               <div className="flex gap-5">
                 <button

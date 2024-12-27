@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { createPassword } from "../redux/Auth/Action";
+import { useEffect } from "react";
 
 
 
@@ -30,10 +31,11 @@ export default function SetPassword() {
         dispatch(createPassword(auth?.student?.email, {
             password: data.password
         }));
-        setTimeout(() => {
-            !auth?.error && navigate("/");
-        }, 100);
     }
+
+    useEffect(() => {
+        auth?.jwt && navigate("/");
+    }, [auth?.jwt]);
 
     return (
         !auth?.error ? (
@@ -51,7 +53,7 @@ export default function SetPassword() {
                                         {...register("password")}
                                         placeholder="Enter your password" required
                                     /></td>
-                                    {errors?.password && <td>{errors.password.message}</td>}
+                                    {errors?.password && <td className="text-red-500">{errors.password.message}</td>}
                                 </tr>
                                 <tr>
                                     <td>Confirm Password</td>
@@ -60,7 +62,7 @@ export default function SetPassword() {
                                         {...register("confirmPassword")}
                                         placeholder="Re-enter your password" required
                                     /></td>
-                                    {errors?.confirmPassword && <td>{errors.confirmPassword.message}</td>}
+                                    {errors?.confirmPassword && <td className="text-red-500">{errors.confirmPassword.message}</td>}
                                 </tr>
                             </tbody>
                         </table>
