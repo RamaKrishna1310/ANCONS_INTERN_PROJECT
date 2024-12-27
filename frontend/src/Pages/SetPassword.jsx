@@ -34,12 +34,12 @@ export default function SetPassword() {
     }
 
     useEffect(() => {
-        auth?.jwt && navigate("/");
+        auth?.jwt && navigate("/apply");
     }, [auth?.jwt]);
 
     return (
-        !auth?.error ? (
-            <>
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            {!auth?.error ? (
                 <div className="mx-auto flex flex-col gap-2">
                     <h1 className="pl-1">Set Password</h1>
                     <p className="pl-1">To protect the security of your account, please specify a new password must meet complexity requirements.</p>
@@ -71,9 +71,9 @@ export default function SetPassword() {
                         </div>
                     </form>
                 </div>
-            </>
-        ) : (
-            <p>{auth?.error?.response?.data?.message}</p>
-        )
+            ) : (
+                <p>{auth?.error?.response?.data?.message}</p>
+            )}
+        </div>
     );
 }

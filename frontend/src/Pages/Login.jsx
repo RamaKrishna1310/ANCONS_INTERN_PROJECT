@@ -32,11 +32,11 @@ export default function Login() {
     }
 
     useEffect(() => {
-        auth?.jwt && navigate("/");
+        auth?.jwt && navigate("/apply");
     }, [auth.jwt]);
 
     return (
-        <>
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
             <div className="mx-auto flex flex-col gap-2">
                 <h1 className="pl-1">Login</h1>
                 {
@@ -63,10 +63,10 @@ export default function Login() {
                     </table>
                     <div className="pl-1 pb-5">
                         <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold" type="submit">Login</button>
-                        <a href="/forgot-password" className="text-[#5D4DC9] pl-2 ml-2">Forgot Password?</a>
+                        <a href="/apply/forgot-password" className="text-[#5D4DC9] pl-2 ml-2">Forgot Password?</a>
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

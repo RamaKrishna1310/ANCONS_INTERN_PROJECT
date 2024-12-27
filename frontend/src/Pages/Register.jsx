@@ -37,12 +37,12 @@ export default function Register() {
     }
 
     useEffect(() => {
-        auth?.student && navigate("/verify-pin");
+        auth?.student && navigate("/apply/verify-pin");
     }, [auth?.student])
 
     return (
-        !auth?.error ? (
-            <>
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            {!auth?.error ? (
                 <div className="mx-auto flex flex-col gap-2">
                     <h1 className="pl-1">Register</h1>
                     {
@@ -109,9 +109,9 @@ export default function Register() {
                         </div>
                     </form>
                 </div>
-            </>
-        ) : (
-            <p>{auth?.error?.response?.data?.message}</p>
-        )
+            ) : (
+                <p>{auth?.error?.response?.data?.message}</p>
+            )}
+        </div>
     );
 }

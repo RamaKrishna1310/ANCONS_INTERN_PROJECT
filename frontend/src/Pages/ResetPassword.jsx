@@ -38,40 +38,43 @@ export default function ResetPassword() {
     }
 
     useEffect(() => {
-        auth?.jwt && navigate("/");
+        auth?.jwt && navigate("/apply/");
     }, [auth?.jwt]);
 
     return (
-        <div className="flex flex-col gap-4 w-full h-auto">
-            <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
-            {
-                auth?.error && (<p className="text-red-500">Something went wrong, please try again</p>)
-            }
-            <form onSubmit={handleSubmit(handleResetPassword)} className="flex flex-col gap-4 w-1/3 mx-auto">
-                <label htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    {...register("password")}
-                    required
-                    className="p-2 border border-gray-300 rounded-md"
-                />
-                {errors?.password && <p className="text-red-500">{errors.password.message}</p>}
-                <label htmlFor="confirm-password">Confirm Password</label>
-                <input
-                    type="password"
-                    id="confirm-password"
-                    name="confirmPassword"
-                    {...register("confirmPassword")}
-                    required
-                    className="p-2 border border-gray-300 rounded-md"
-                />
-                {errors?.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
-                <button type="submit" className="bg-[#5D4DC9] border-none font-bold text-white p-2 rounded-md">
-                    Reset Password
-                </button>
-            </form>
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            <div className="flex flex-col gap-4 w-full h-auto">
+                <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
+                {
+                    auth?.error && (<p className="text-red-500">Something went wrong, please try again</p>)
+                }
+                <form onSubmit={handleSubmit(handleResetPassword)} className="flex flex-col gap-4 w-1/3 mx-auto">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        {...register("password")}
+                        required
+                        className="p-2 border border-gray-300 rounded-md"
+                    />
+                    {errors?.password && <p className="text-red-500">{errors.password.message}</p>}
+                    <label htmlFor="confirm-password">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        name="confirmPassword"
+                        {...register("confirmPassword")}
+                        required
+                        className="p-2 border border-gray-300 rounded-md"
+                    />
+                    {errors?.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
+                    <button type="submit" className="bg-[#5D4DC9] border-none font-bold text-white p-2 rounded-md">
+                        Reset Password
+                    </button>
+                </form>
+            </div>
         </div>
+
     );
 }

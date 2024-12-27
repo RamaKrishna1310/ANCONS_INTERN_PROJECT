@@ -35,12 +35,12 @@ export default function VerifyPin() {
     }, [auth?.student, reset]);
 
     useEffect(() => {
-        auth?.isVerified && navigate("/set-password");
+        auth?.isVerified && navigate("/apply/set-password");
     }, [auth?.isVerified])
 
     return (
-        !auth?.error ? (
-            <>
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            {!auth?.error ? (
                 <div className="mx-auto flex flex-col gap-2">
                     <h1 className="pl-1">Login</h1>
                     <p className="verify-pin">
@@ -79,11 +79,11 @@ export default function VerifyPin() {
                             <button className="border-none bg-[#5D4DC9] text-white rounded-sm py-1 px-4 font-bold" type="submit">Login</button>
                         </div>
                     </form>
-                    <p><span className="font-bold text-base">First-time users: </span><a href="/register">Cilck Here</a> to create an account.</p>
+                    <p><span className="font-bold text-base">First-time users: </span><a href="/apply/register">Cilck Here</a> to create an account.</p>
                 </div>
-            </>
-        ) : (
-            <p>{auth?.error?.response?.data?.message}</p>
-        )
+            ) : (
+                <p>{auth?.error?.response?.data?.message}</p>
+            )}
+        </div>
     );
 }

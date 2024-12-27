@@ -34,8 +34,8 @@ export default function AcademicHistory() {
     }, [dispatch, student?.student?.id, update]);
 
     return (
-        <>
-            <div className="w-[75%] p-4 mt-[-28px]">
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            <div className="p-4 mt-[-28px]">
                 <h1>Academic History</h1>
                 {
                     student?.error && (<p className="text-red-500">Error while processing data, please try again</p>)
@@ -115,6 +115,6 @@ export default function AcademicHistory() {
             </div>
             <InstituteDialog open={openInstituteDialog} onClose={handleInstituteClose} update={setUpdate} instituteData={instituteData} />
             <SchoolDialog open={openSchoolDialog} onClose={handleSchoolClose} update={setUpdate} schoolData={schoolData} />
-        </>
+        </div>
     );
 }

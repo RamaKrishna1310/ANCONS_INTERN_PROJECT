@@ -145,7 +145,7 @@ export default function PersonalInformation() {
     };
 
     useEffect(() => {
-        student?.createdPersonalInformationResponse && navigate("/enrollment-plan");
+        student?.createdPersonalInformationResponse && navigate("/apply/enrollment-plan");
     }, [student?.createdPersonalInformationResponse, navigate]);
 
     useEffect(() => {
@@ -304,8 +304,8 @@ export default function PersonalInformation() {
     }, [selectedState2, student?.addresses]);
 
     return (
-        <>
-            <div className="w-[75%] p-4 mt-[-28px]">
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            <div className="p-4 mt-[-28px]">
                 <form onSubmit={handleSubmit(handleCreatePersonalInformation)}>
                     <h1>Personal Information</h1>
                     {
@@ -808,6 +808,6 @@ export default function PersonalInformation() {
                     <button className="border-none bg-[#5D4DC9] text-white py-1 px-6 rounded-sm font-bold mt-2 cursor-pointer" type="submit">Continue</button>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

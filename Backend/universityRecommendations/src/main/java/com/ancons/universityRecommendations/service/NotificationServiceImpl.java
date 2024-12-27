@@ -40,7 +40,7 @@ public class NotificationServiceImpl {
 		MimeMessage message = javaMailSender.createMimeMessage();              
 	    MimeMessageHelper helper = new MimeMessageHelper(message);
 	    
-		String link = "http://localhost:3000/reset-password?token=" + token;
+		String link = "http://localhost:3000/apply/reset-password?token=" + token;
 		String subject = "Here's the link to reset your password";
 		String content = "<p>Hello,</p>"
 	            + "<p>You have requested to reset your password.</p>"

@@ -49,7 +49,7 @@ export default function EnrollmentPlans() {
     }
 
     useEffect(() => {
-        student?.createdEnrollmentPlanResponse && navigate("/academic-history");
+        student?.createdEnrollmentPlanResponse && navigate("/apply/academic-history");
     }, [student?.createdEnrollmentPlanResponse, navigate])
 
     useEffect(() => {
@@ -73,8 +73,8 @@ export default function EnrollmentPlans() {
     }, [student?.enrollmentPlan, reset]);
 
     return (
-        <>
-            <div className="w-[75%] p-4 mt-[-28px]">
+        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+            <div className="p-4 mt-[-28px]">
                 <h1>Enrollment Plans</h1>
                 {
                     student?.error && (<p className="text-red-500">Error while processing data, please try again</p>)
@@ -149,6 +149,6 @@ export default function EnrollmentPlans() {
                     <button className="border-none rounded-sm bg-[#5D4DC9] text-white py-1 px-4 font-bold mt-8" type="submit">Continue</button>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

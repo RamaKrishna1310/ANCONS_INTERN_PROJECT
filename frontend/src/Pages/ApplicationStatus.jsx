@@ -58,7 +58,7 @@ export default function ApplicationStatus() {
   }, [student?.createdStudentApplicationResponse]);
 
   const handleOpenApplication = () => {
-    navigate("/personal-information");
+    navigate("/apply/personal-information");
   };
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export default function ApplicationStatus() {
   }, [student?.student?.id, dispatch, student?.createdStudentApplicationResponse?.data]);
 
   return (
-    <>
-      <div className="w-[75%] p-4 mt-[-28px]">
+    <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+      <div className="p-4 mt-[-28px]">
         <h1>Welcome to our application!</h1>
         <p>
           Thank you for your interest in the California Institute of Genetics!
@@ -109,7 +109,7 @@ export default function ApplicationStatus() {
               student?.studentApplications?.map((item, index) => (
                 <tr key={index}>
                   <td className="text-center">
-                    <a href="/personal-information">{item?.type}</a>
+                    <a href="/apply/personal-information">{item?.type}</a>
                   </td>
                   <td className="text-center">{item?.status}</td>
                   <td className="text-center">{item?.startedAt}</td>
@@ -191,6 +191,6 @@ export default function ApplicationStatus() {
           </div>
         </Dialog>
       </div>
-    </>
+    </div>
   );
 }
