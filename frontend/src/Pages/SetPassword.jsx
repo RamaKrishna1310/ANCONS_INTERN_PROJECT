@@ -38,7 +38,7 @@ export default function SetPassword() {
     }, [auth?.jwt]);
 
     return (
-        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+        <>
             {!auth?.error ? (
                 <div className="mx-auto flex flex-col gap-2">
                     <h1 className="pl-1">Set Password</h1>
@@ -74,6 +74,6 @@ export default function SetPassword() {
             ) : (
                 <p>{auth?.error?.response?.data?.message}</p>
             )}
-        </div>
+        </>
     );
 }

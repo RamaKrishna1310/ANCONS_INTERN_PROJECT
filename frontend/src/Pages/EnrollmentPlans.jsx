@@ -73,7 +73,7 @@ export default function EnrollmentPlans() {
     }, [student?.enrollmentPlan, reset]);
 
     return (
-        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+        <>
             <div className="p-4 mt-[-28px]">
                 <h1>Enrollment Plans</h1>
                 {
@@ -149,6 +149,6 @@ export default function EnrollmentPlans() {
                     <button className="border-none rounded-sm bg-[#5D4DC9] text-white py-1 px-4 font-bold mt-8" type="submit">Continue</button>
                 </form>
             </div>
-        </div>
+        </>
     );
 }

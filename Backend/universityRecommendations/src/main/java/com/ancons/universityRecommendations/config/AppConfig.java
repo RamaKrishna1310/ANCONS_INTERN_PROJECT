@@ -1,4 +1,4 @@
-package com.ancons.universityRecommendations.config;
+	package com.ancons.universityRecommendations.config;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class AppConfig {
 			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 				CorsConfiguration cfg = new CorsConfiguration();
 
-				cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173"));
+				cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173", "https://calgenetics-client.vercel.app"));
 				cfg.setAllowedMethods(Collections.singletonList("*"));
 				cfg.setAllowCredentials(true);
 				cfg.setAllowedHeaders(Collections.singletonList("*"));

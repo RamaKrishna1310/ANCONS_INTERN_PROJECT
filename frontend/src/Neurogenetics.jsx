@@ -1,4 +1,4 @@
-import homepic from './assests/home-pic.jpg'
+ import homepic from './assests/home-pic.jpg'
 export default function Neurogenetics() {
     return (
         <div className='p-20'>
@@ -45,24 +45,24 @@ export default function Neurogenetics() {
                         </ul>
                     </ol>
                 </div>
-                <div className='w-1/2'>
+                <div className='w-1/2 ml-28'>
                     <h3 className='text-[25px] text-black'>Training for the Parkinson Research Project</h3>
                     <form action="">
                         <table>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Name*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Phone*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Email*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Qualification*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Instituition Name*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='GPA*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Year Of Passing*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Location*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Country*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Work Experience*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Name of Referral or any Recruiter if any*' /></tr>
-                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md' required placeholder='Email of Refferal or Recruiter*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Name*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Phone*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Email*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Qualification*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Instituition Name*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='GPA*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Year Of Passing*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Location*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Country*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Work Experience*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Name of Referral or any Recruiter if any*' /></tr>
+                            <tr><input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Email of Refferal or Recruiter*' /></tr>
                             <tr>Attach Academic Transcript <input type="file" /></tr>
-                            <tr><input type="submit" value="SUBMIT APPLICATION" /></tr>
+                            <tr><input type="submit" value="SUBMIT APPLICATION" className="p-5 rounded-full font-semibold text-blue-800 border-solid border-2 border-blue-800 shadow-md hover:bg-blue-800 hover:text-white ml-10 mt-5 mb-3"/></tr>
                             <tr>This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</tr>
                         </table>
                     </form>

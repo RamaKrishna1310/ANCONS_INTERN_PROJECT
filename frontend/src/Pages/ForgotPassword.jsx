@@ -25,12 +25,12 @@ export default function ForgotPassword() {
     }
 
     return (
-        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+        <div>
             <div className="flex flex-col gap-4 w-full h-auto">
                 <h1 className="text-2xl font-semibold text-center">Forgot Password</h1>
                 {auth?.loading && <p className="text-center text-orange-500">Please wait while we are sending Reset Link to your registered email</p>}
                 {auth?.forgotPasswordMessage && <p className="text-center text-green-500">{auth.forgotPasswordMessage}</p>}
-                <form onSubmit={handleSubmit(handleForgotPassword)} className="flex flex-col gap-4 w-1/3 mx-auto">
+                <form onSubmit={handleSubmit(handleForgotPassword)} className="flex flex-col gap-4 mx-auto">
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"

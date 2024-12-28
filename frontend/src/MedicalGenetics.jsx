@@ -181,23 +181,23 @@ export default function MedicalGenetics() {
                             <li><span className='font-bold text-gray-700'>Readings: </span>Curated materials that complement lecture content, providing additional depth and insight.</li>
                             <li><span className='font-bold text-gray-700'>Assessments: </span>Periodic assessments to evaluate understanding and retention of key concepts.</li></ul></p>
                 </div>
-                <div className='w-1/2'>
+                <div className='w-1/2 ml-28'>
                     <h3 className='text-[25px] text-black'>Tuiton fee $250 per month (8 months online)</h3>
                     <form action="">
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Phone*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Name*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Email*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Qualification*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Instituition Name*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='GPA*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Year Of Passing*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Location*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Country*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Work Experience*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Name of Referral or any Recruiter if any*' />
-                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block' required placeholder='Email of Refferal or Recruiter*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Phone*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Name*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Email*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Qualification*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Instituition Name*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='GPA*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Year Of Passing*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Location*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Country*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Work Experience*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Name of Referral or any Recruiter if any*' />
+                            <input type='text' className='border-solid border-2 border-blue-800 shadow-md block w-80 p-3 rounded-md m-3' required placeholder='Email of Refferal or Recruiter*' />
                             Attach Academic Transcript <input type="file" />
-                            <input type="submit" value="REGISTER" className='block'/>
+                            <input type="submit" value="REGISTER" className='w-36 ml-5 mt-5 block p-5 rounded-full font-semibold text-blue-800 border-solid border-2 border-blue-800 shadow-md hover:bg-blue-800 hover:text-white'/>
                     </form>
                 </div>
             </div>

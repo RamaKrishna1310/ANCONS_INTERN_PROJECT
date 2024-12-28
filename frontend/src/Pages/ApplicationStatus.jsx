@@ -76,7 +76,7 @@ export default function ApplicationStatus() {
   }, [student?.student?.id, dispatch, student?.createdStudentApplicationResponse?.data]);
 
   return (
-    <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+    <>
       <div className="p-4 mt-[-28px]">
         <h1>Welcome to our application!</h1>
         <p>
@@ -191,6 +191,6 @@ export default function ApplicationStatus() {
           </div>
         </Dialog>
       </div>
-    </div>
+    </>
   );
 }

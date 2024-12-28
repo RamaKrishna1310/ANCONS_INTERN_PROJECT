@@ -1,5 +1,5 @@
 import axios from "axios";
-const LOCALHOST = "http://localhost:5054";
+const LOCALHOST = "https://calgenetics-server-production.up.railway.app"; //"http://localhost:5054";
 
 export const API_BASE_URL = LOCALHOST;
 

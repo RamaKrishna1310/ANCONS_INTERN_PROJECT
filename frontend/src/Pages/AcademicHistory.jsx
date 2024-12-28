@@ -34,9 +34,9 @@ export default function AcademicHistory() {
     }, [dispatch, student?.student?.id, update]);
 
     return (
-        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
-            <div className="p-4 mt-[-28px]">
-                <h1>Academic History</h1>
+        <>
+            <div className="p-4 mt-[-28px] w-full">
+                <h1 className="w-[800px]">Academic History</h1>
                 {
                     student?.error && (<p className="text-red-500">Error while processing data, please try again</p>)
                 }
@@ -64,7 +64,7 @@ export default function AcademicHistory() {
                             ))
                         }
                         <tr >
-                            <td className="w-[45%]">
+                            <td className="">
                                 <p onClick={handleInstituteOpen} className="cursor-pointer underline text-blue-600">Add Institution</p>
                             </td>
                         </tr>
@@ -102,7 +102,7 @@ export default function AcademicHistory() {
                                 </>
                             ) : (
                                 <tr>
-                                    <td className="w-[45%]">
+                                    <td className="">
                                         <p>You must add your instituition before you may add your school official</p>
                                     </td>
                                 </tr>
@@ -115,6 +115,6 @@ export default function AcademicHistory() {
             </div>
             <InstituteDialog open={openInstituteDialog} onClose={handleInstituteClose} update={setUpdate} instituteData={instituteData} />
             <SchoolDialog open={openSchoolDialog} onClose={handleSchoolClose} update={setUpdate} schoolData={schoolData} />
-        </div>
+        </>
     );
 }

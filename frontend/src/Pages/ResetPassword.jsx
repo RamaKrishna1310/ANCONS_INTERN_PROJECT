@@ -42,13 +42,13 @@ export default function ResetPassword() {
     }, [auth?.jwt]);
 
     return (
-        <div className="bg-white px-4 py-8 shadow-lg w-[70%] flex rounded-sm">
+        <>
             <div className="flex flex-col gap-4 w-full h-auto">
                 <h1 className="text-2xl font-semibold text-center">Reset Password</h1>
                 {
                     auth?.error && (<p className="text-red-500">Something went wrong, please try again</p>)
                 }
-                <form onSubmit={handleSubmit(handleResetPassword)} className="flex flex-col gap-4 w-1/3 mx-auto">
+                <form onSubmit={handleSubmit(handleResetPassword)} className="flex flex-col gap-4 mx-auto">
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -74,7 +74,7 @@ export default function ResetPassword() {
                     </button>
                 </form>
             </div>
-        </div>
+        </>
 
     );
 }
